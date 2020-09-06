@@ -1,0 +1,438 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway|Inconsolata&display=swap');
+
+@font-face {
+  font-family: Consolas;
+  src: url(sansation_light.woff);
+}
+
+* {
+	font-family: Raleway;
+}
+
+button {
+	background: none;
+	border: none;
+}
+
+html {
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	background: black;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+}
+
+select {
+	cursor: pointer;
+	background: black;
+	color: white;
+	border: none;
+	border-bottom-style: solid;
+	border-width: 1px;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.chordstable {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+}
+
+.chordstable div div:hover {
+	color: red;
+}
+
+.chordstable text {
+	width: 0;
+}
+
+#CHRDSS sup {
+	font-family: Inconsolata;
+	padding-left: 10px;
+	color: #5C5C5C;
+}
+
+#neck0 {
+	height: 200px;
+	width: 100%;
+}
+
+#btns text {
+	cursor: pointer;
+}
+
+.totalrescale {
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-top: 41px;
+	font-size: 2em;
+}
+
+#TRN button {
+	color: white;
+	border: none;
+	cursor: pointer;
+	background: none;
+	text-align: center;
+}
+
+#rootslist {
+	width: 2em;
+	display: flex;
+	flex-direction: row;
+}
+
+#scaleslist {
+	width: 4.5em;
+	margin-left: 5px;
+}
+
+#NECK {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.NOTEBOLD {
+	font: bolder 16px Inconsolata;
+	user-select: none;
+	pointer-events: none;
+}
+
+.NOTEPIN {
+	font: lighter 15px Inconsolata;
+}
+
+#RM {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+#RM button {
+	border: none;
+}
+
+#scale {
+	display: flex;
+	flex-direction: row;
+	user-select: none;
+	border: 0;
+	align-self: center;
+	width: auto;
+}
+
+#scale button {
+	cursor: pointer;
+}
+
+.chordstable div {
+	user-select: none;
+}
+
+.ROOTBTN {
+	color: white;
+	font-size: 1.1em;
+	background: none;
+	cursor: pointer;
+}
+
+.STEP {
+	height: 20px;
+	width: 35px;
+	user-select: none;
+	font: 14px Inconsolata;
+}
+
+.STEPOFFRESCALE {
+	color: white;
+	background: black;
+	width: 30px;
+	user-select: none;
+	font:  14px Inconsolata;
+}
+
+.STEPOFFRESCALE:hover {
+	color: black;
+	background: white;
+	border-radius: 2px;
+}
+
+#ROOTBTN {
+	min-width: 4em;
+	display: flex;
+	justify-content: space-between;
+	align-self: flex-start;
+	margin-top: 50px;
+	margin-right: 10px;
+}
+
+#CHRDSS {
+	display: flex;
+	margin-top: 20px;
+	color: white;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+#CHRD1 {
+	border-left: solid;
+	border-width: 1px;
+	flex-grow: 1;
+	margin-left: 16.25%;
+}
+
+#CHRD1 div {
+	user-select: none;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	flex-direction: row;
+	margin-top: 2px;
+}
+
+#CHRD1 div div:hover {
+	color: red;
+}
+
+#ME {
+	border-right: solid;
+	border-color: white;
+	border-width: 1px; 
+	margin-right: 10px;
+	padding-right: 10px;
+	flex-direction: column;
+	text-align: right;
+	align-items: right;
+	list-style: none;
+	background: black;
+	z-index: 2;
+	align-self: flex-end;
+	margin-bottom: 0;
+	margin-top: 0; 
+}
+
+#DOWN {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	background: black;
+	align-self: flex-end;
+	flex-wrap: nowrap;
+}
+
+#DOWN div {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+#DOWN a {
+	margin-left: 6px;
+}
+
+a {
+	color: white;
+    text-decoration: none;
+}
+
+a:link {
+	color: white;
+	text-decoration: underline;
+}
+
+#hintlook {
+	background: black;
+	color: white;
+	border-bottom: 1px;
+	cursor: pointer;
+	border-bottom-style: solid;
+	border-color: white;
+	height: auto;
+}
+
+#printhint {
+	display: none;
+}
+
+.fretpoints {
+	font-family: Inconsolata;
+	font-weight: bolder;
+}
+
+#MENU {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#tune {
+	display: flex;
+	align-items: center;
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
+@keyframes scale {
+	from {transform: scale(1); color: white;}
+	20% {transform: scale(1.5); color: #3FFFF8;}
+	to {transform: scale(1); color: white;}
+}
+
+#tunein {
+	color: inherit;
+	width: 5em;
+	background: none;
+	border: none;
+	text-align: center;
+}
+
+#tune button {
+	color: inherit;
+}
+
+#colorinv {
+	color: white;
+	background: none;
+	cursor: pointer;
+}
+
+#alter {
+	color: white;
+	background: none;
+	cursor: pointer;
+}
+
+#tunebut {
+	cursor: pointer;
+	color: white;
+}
+
+#alter {
+	width: 2em;
+	font-size: 1em;
+}
+
+#alter:hover {
+	transform: scale(1.1);
+}
+
+#tunebut:hover {
+	transform: scale(1.05);
+}
+
+#colorinv:hover {
+	transform: scale(1.05);
+}
+
+#tabletrn {
+	text-align: center;
+}
+
+#tabletrn:hover {
+	transform: scale(1.05);
+}
+
+#TRN {
+	text-align: center;
+}
+
+#TRN:hover {
+	transform: scale(1.05);
+}
+
+#mode {
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	margin-left: 10px;
+	user-select: none;
+	font-size: 0.9em;
+	align-self: flex-start;
+	margin-top: 50px;
+}
+
+#mode button {
+	font-size: 1.1em;
+	cursor: pointer;
+	margin: -5px;
+	color: white;
+}
+
+#modeslist {
+	width: 3.75em;
+}
+
+#hintlook {
+	position: relative;
+	left: 21%;
+	font-size: 1em;
+	width: 5%;
+}
+
+#Vlogo {
+	z-index: 3;
+	position: fixed;
+	right: 0;
+	bottom: 17px;
+}
+
+.conso {
+	width: 100%;
+	height: 50px;
+}
+
+#Vlogo {
+	right: 0;
+	bottom: 0;
+	transform: scale(0.5);
+}
+
+#hintlook {
+	position: static;
+	width: 10%;
+	font-size: 2em;
+}
+
+#rightmenu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+	width: 100%;
+}
+
+#CHRD1 {
+	align-self: center;
+	margin-left: 0;
+}
+
+#DOWN {
+	align-self: center;
+}
+
+#copyright {
+	color: #4A4A4A;
+}

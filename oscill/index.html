@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>OSCILL</title>
+	<link href="css.css" rel="stylesheet">
+</head>
+<body>
+	<div id="visualContaiter">
+		<canvas id="spherical" width="400" height="400"></canvas>
+		<canvas id="oscillo" width="700" height="400"></canvas>
+	</div>
+	<div id="inputOscillo">
+		<div id="inputHz"></div>
+		<div style="display: flex;">
+			<div style="display: flex; align-items: center; flex-direction: column;">
+				<button class="osc_inputAdd" onclick="addOsc()">+</button>
+				<button class="osc_inputAdd" onclick="playTones()">></button>
+			</div>
+	        <table id="rightRangers">
+				<tr>
+	                <td>AMPL:</td>
+	                <td><input id="rr_ampl" type="range" step="0.0005" min="0" max="1" oninput="ampl=Number(this.value)"></td>
+	            </tr>
+	            <tr>
+	                <td>ZOOM:</td>
+	                <td><input id="rr_zoom" type="range" step="0.001" min="0.001" max="1" oninput="zoom=Number(1-this.value)"></td>
+	            </tr>
+	            <tr>
+	                <td>SPEED:</td>
+	                <td><input id="rr_speed" type="range" step="0.001" min="0" max="3" oninput="speed=Number(this.value)"></td>
+	            </tr>
+	            <tr>
+					<td>DETAIL:</td>
+					<td><input id="rr_detail" type="range" step="0.1" min="0.01" max="3" oninput="sphDetail=Number(3-this.value)"></td>
+				</tr>
+				<tr>
+					<td>TAIL:</td>
+					<td><input id="rr_tail" type="range" step="1" min="0" max="2000" oninput="sphTail=Number(this.value)"></td>
+				</tr>
+	        </table>
+		</div>
+	</div>
+
+	<div>
+		<!-- <div><h2>Что такое звук?</h2></div> -->
+	</div>
+	<script src="js.js"></script>
+</body>
+</html>

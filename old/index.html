@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FLAGRANTIOR</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Интерактивный сайт для музыкантов."/>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <link href="css.css" rel="stylesheet">
+    <link rel="icon" href="/media/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="media/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="media/favicon.svg">
+    <link rel="apple-touch-icon" href="media/favicon.png">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152738341-1"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-152738341-1');</script>
+    <!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(56394601, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/56394601" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+
+<body>
+    <div id="NECK">
+        <!-- <svg id="btns"></svg> -->
+        <svg id="neck0">
+            <g id="btns"></g>
+            <g id="strings"></g>
+            <g id="frets"></g>
+            <g id="notes"></g>
+        </svg>
+    </div>
+    <div id="MENU">
+        <div id="RM">
+            <div id="ROOTBTN">
+                <button class="ROOTBTN" onclick="REROOT(false)"><</button>
+                <select id="rootslist" onchange="SELECTROOT(this.value)">
+                    <option value="0">C</option>
+                    <option value="1">C#</option>
+                    <option value="2">D</option>
+                    <option value="3">D#</option>
+                    <option value="4">E</option>
+                    <option value="5">F</option>
+                    <option value="6">F#</option>
+                    <option value="7">G</option>
+                    <option value="8">G#</option>
+                    <option value="9">A</option>
+                    <option value="10">A#</option>
+                    <option value="11">B</option>
+                </select>
+                <button class="ROOTBTN" onclick="REROOT(true)">></button>
+            </div>
+            <div id="scale">
+                <text style="user-select: none; cursor: pointer;"onclick="TOTALRESCALE(true)" class="totalrescale"><</text>
+                <div class="chordstable" id="stp_0"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 100%, black 100%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(0)" style="color: black; background: white">C</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_1"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 9.3%, black 9.3%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(1)" style="color: black; background: white">C#</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_2"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 9.8%, black 9.8%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(2)" style="color: black; background: white">D</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_3"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 18.5%, black 18.5%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(3)" style="color: black; background: white">D#</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_4"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 23.4%, black 23.4%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(4)" style="color: black; background: white">E</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_5"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 30.6%, black 30.6%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(5)" style="color: black; background: white">F</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_6"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 6.7%, black 6.7%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(6)" style="color: black; background: white">F#</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_7"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 45.2%, black 45.2%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(7)" style="color: black; background: white">G</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_8"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 15.4%, black 15.4%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(8)" style="color: black; background: white">G#</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_9"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 29.6%, black 29.6%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(9)" style="color: black; background: white">A</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_10"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 15.1%, black 15.1%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(10)" style="color: black; background: white">A#</button><div class="column"></div></div>
+                <div class="chordstable" id="stp_11"><div class="conso" style="background: linear-gradient(to top, black 0%, #323232 7.8%, black 7.8%, black 100%)"></div><button class="STEP" onmouseleave="HIGHLIGHTRESET()" onclick="RESCALE(11)" style="color: black; background: white">B</button><div class="column"></div></div>
+                <text style="user-select: none; cursor: pointer;" onclick="TOTALRESCALE(false)" class="totalrescale">></text>
+                <div id="mode">
+                    <button onclick="REMODE(-1)" style="margin-right: 1px;"><</button>
+                    <select id="modeslist" onchange="SELECTMODE(this.value)"></select>
+                    <button onclick="REMODE(1)" style="margin-left: 1px;">></button>
+                </div>
+            </div>
+            <div id="rightmenu">
+                <div id="tune">
+                    <form onsubmit="TUNEIN(); return false;" style="display: flex; flex-direction: row;">[<input id="tunein" value="EADGBE">]</text></form><button id="tunebut" onclick="TUNEIN()" title="SET, ONLY #SHARPS USE">TUNE</button>
+                </div>
+                <button id="alter" onclick="ALTER()">#</button>
+                <div id="TRN"></div>
+                <div><button title="INVERT COLORS" onclick="THEME()" id="colorinv">THEME</button></div>
+                <div>
+                    <button id="tabletrn" title="CHANGE CHORDS TABLE LOOK" style="color: white; background: none; cursor: pointer;" onclick="TABLE()">TABLE&nbsp▼</button>
+                </div>
+                <select id="scaleslist" onchange="SELECTSCALE(this.value)">
+                    <option value="scale" selected disabled hidden>SCALES</option>
+                    <option value="000000000000" style="color: grey">empty</option>
+                    <option value="101011010101">MAJOR</option>
+                    <option value="101101011010">MINOR</option>
+                    <option value="111111111111">CHROMATIC</option>
+                    <option value="101011011001">HARMONIC MAJOR</option>
+                    <option value="101101011001">HARMONIC MINOR</option>
+                    <option value="101011011010">MELODIC MAJOR</option>
+                    <option value="101101010101">MELODIC MINOR</option>
+                    <option value="110011011001">DOUBLE HARMONIC MAJOR</option>
+                    <option value="100101110010">DOUBLE HARMONIC MINOR</option>
+                    <option value="100101010010">PENTATONIC</option>
+                    <option value="100101110010">BLUES SEXTATONIC</option>
+                    <option value="110011011010">PHRYGIAN DOMINANT</option>
+                    <option value="110010101001">ENIGMATIC</option>
+                    <option value="110101010101">NEAPOLITAN</option>
+                    <option value="101100011000">JAPAN</option>
+                </select> 
+            </div>
+        </div>
+    </div>
+    <div id="CHRDSS" style="user-select: none">
+        <div id="CHRD1">
+            <div id="MCHRDS"></div>
+            <div id="QCHRDS"></div>
+            <div id="QRCHRDS"></div>
+            <div id="SCHRDS"></div>
+            <div id="SXCHRDS"></div>
+            <div id="S2CHRDS"></div>
+            <div id="S4CHRDS"></div>
+            <div id="ACHRDS"></div>
+        </div>
+        <div id="DOWN">
+            <div style="padding-left: 10px; border-left: solid; border-color: white; border-width: 1px; display: flex; flex-direction: column;">
+<!--             <div title="PAYPAL DONATION" id="DONATE">
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VYAQKXTZK8KYY&source=url"><img height="40px" src="/media/donate.svg" alt=""></a>
+            </div> -->
+            <div style="display: flex; flex-direction: column;">
+                <div><a href="/">NEW VERSION OF SITE</a></div>
+                <div>
+                    HINT v4.4
+                </div>
+                <div>BLACK:
+                    <a title="DOWNLOAD WHITE VERTICAL PRINTHINT" href="/hint/DARKHINT_V.png" target="_blank">VERT</a>
+                    <a title="DOWNLOAD WHITE HORIZONTAL PRINTHINT" href="/hint/DARKHINT_H.png" target="_blank">HORIZ</a>
+                </div>
+                <div>WHITE:
+                    <a title="DOWNLOAD WHITE VERTICAL PRINTHINT" href="/hint/HINT_V.png" target="_blank">VERT</a>
+                    <a title="DOWNLOAD WHITE HORIZONTAL PRINTHINT" href="/hint/HINT_H.png" target="_blank">HORIZ</a>
+                </div>
+            </div>
+            </div>
+            <ul id="ME">
+                <li><a href="/music">MY MUSIC</a></li>
+                <li><a href="https://vk.com/flagrantior">VK</a><a href="https://fb.com/flagrantior">FB</a><a href="https://t.me/flagrantior">TG</a><a href="https://www.soundcloud.com/flagrantior">SC</a></li>
+                <li><a href="https://www.reddit.com/user/Flagrantior">Reddit</a><a href="https://pikabu.ru/@Flagrantior/mine">Picabu</a></li>
+                <li style="user-select: none">tg:<a href="https://www.t.me/flagrantior" target="_blank">BLOG</a><a href="https://www.t.me/flagrantlychat" target="_blank">CHAT</a></li>
+                <!-- <li><a href="https://www.youtube.com/channel/UC6Kqq9Ow0v5C3fbx7YK9-lA" target="_blank">YOUTUBE</a></li> -->
+                <li style="user-select: text" onclick="MAILCOPY()">flagrantior@gmail.com</li>
+            </ul>
+        </div>
+    </div>
+    <div id="MSG" style="position: fixed; font-family: Inconsolata; bottom: 2em; left: 0.5%; font-size: 15px; background: black; color: #C0C0C0;">ДИСТАНЦИОННЫЕ УРОКИ ГИТАРЫ (В ПИТЕРЕ НА ДОМ): <a href="https://vk.com/flagrantior">vk.com/flagrantior</a><text></div>
+    <svg id="Vlogo" width="125px" height="75px"></svg>
+    <button id="hintlook" onclick="HINTLOOK()">▼</button>
+    <img id="printhint" width="100%" style="margin-bottom: 30px" src="/hint/DARKHINT_H.png">
+    <div style="flex-grow: 1"></div>
+    <div id="copyright">© Valentin Gaan, 2019</div>
+</body>
+<script src="js.js"></script>
+</html>

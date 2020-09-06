@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>404</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="/media/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/media/favicon.svg">
+    <link rel="apple-touch-icon" href="/media/favicon.png">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152738341-1"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-152738341-1');</script>
+    <!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(56394601, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/56394601" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body onclick="window.open('/index.html', '_self')">
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Abel&display=swap');
+
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		html {
+			height: 100%;
+			width: 100%;
+		}
+
+		body {
+			height: 100%;
+			width: 100%;
+			background: black;
+			color: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+		}
+
+		h1 {
+			user-select: none;
+			font-family: Abel;
+			font-size: 35vw;
+		}
+
+		#logo {
+			margin-left: auto;
+			margin-right: auto;
+			left: 0;
+			right: 0;
+			max-height: 100vh;
+			max-width: 100vw;
+			position: absolute;
+			user-select: none;
+			pointer-events: none;
+		}
+
+		#cross {
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			user-select: none;
+			pointer-events: none;	
+		}
+
+	</style>
+	<svg id="cross">
+		<line x1="0" y1="0" x2="100%" y2="100%" stroke="#fff" stroke-width="1px"/>
+		<line x1="0" y1="100%" x2="100%" y2="0" stroke="#fff" stroke-width="1px"/>
+	</svg>
+	<img id="logo" src="/media/logo.svg">
+	<h1>404</h1>
+</body>
+</html>

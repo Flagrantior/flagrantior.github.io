@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css?family=Jura|Russo+One|Abel&display=swap');
+
+html {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	background: #000;
+	color: #FFF;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: Jura;
+}
+
+a {
+	color: #fff;
+}
+
+#mainpanel {
+	background: #000;
+	display: flex;
+	flex-direction: column;
+}
+
+#mainpanel > div {
+    display: flex;
+	flex: 1 0 auto;
+	/*overflow: auto;*/
+	margin-bottom: 40px;
+	width: 90vw;
+	flex-direction: column;
+	justify-content: flex-start;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-image: linear-gradient(180deg, #000, #fff);
+    border-image-slice: 1;
+    padding-bottom: 30px;
+}
+
+.sectionname {
+	font-family: Russo One;
+	display: flex;
+	justify-content: space-around;
+	font-size: 8vmin;
+	text-align: center;
+	position: sticky;
+	bottom: 0;
+	background: #000;
+}
+
+.sectionbody {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+#me img {
+	margin-top: 50px;
+	max-width: 85vw;
+	margin-left: auto;
+	margin-right: auto;
+	max-height: 100%;
+}
+
+#d3 img {
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 50%;
+	width: 90%;
+	border-style: solid;
+	border-color: #000;
+	border-width: 3px;
+}
+
+.YTframe {
+	margin-left: auto;
+	margin-right: auto;
+	flex: 1 0 auto;
+	max-width: 100%;
+}
+
+#d2 img {
+	width: 45%;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	border-style: solid;
+	border-color: #000;
+	border-width: 3px;
+}
+
+#tech {
+	display: flex;
+	justify-content: center;
+}
+
+#tech img {
+	width: 45%;
+	margin: 0;
+}
+
+#music iframe {
+	height: 500px;
+}
+
+#logos {
+	display: flex;
+	justify-content: space-around;
+}
+
+#logos img {
+	width: 30%;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+#websites {
+	padding-right: 2%;
+	padding-left: 2%;
+	font-size: 1.5em;
+}
+
+#websites a {
+	font-size: 1em;
+}
+
+#websites iframe {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #fff;
+	margin-top: 30px;
+	height: 500px;
+	width: 100%;
+}
+
+ul {
+	align-self: center;
+}
+
+li {
+	margin-top: 10px;
+	font-size: 1.4em;
+	margin-left: -20px;
+}
+
+h1 {
+	letter-spacing: 0.3em;
+	font-size: 7vw;
+}
+
+h2 {
+	font-size: 7vw;
+	letter-spacing: 5vw;
+}
+
+#dev {
+	background: linear-gradient(90deg, #000, rgba(0,0,0,0.5) 50%, #000), url(media/matrix.jpg);
+	background-size: contain;
+	background-repeat: repeat-x;
+}
+
+#flag {
+	transform: rotate(-1deg);
+	padding-bottom: 50px;
+	/*height: 100%;*/
+	flex: 1 0 auto;
+	align-self: center;
+}
+
+.lbrack {
+	transform: rotate(-45deg);
+}
+
+.rbrack {
+	transform: rotate(45deg);
+}
+
+#preloader > p {display:none}
+
+#preloader_preload {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	min-width: 1000px;
+	background: #000000 url(/media/preloader.svg) center center no-repeat;
+	background-size: 50px;
+	z-index: 6;
+}
