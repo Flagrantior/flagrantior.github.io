@@ -104,7 +104,7 @@ for (i=0; i<chords.length; i++) {
 
 function chordsStartDraw() {
 	document.querySelector('#Chords').innerHTML += '<div id="typetable"><div></div></div>';
-	for (chr_type of chords) document.querySelector('#typetable').innerHTML += '<div onmouseover="chordTypesHightlight(this.innerText)" onmouseleave="chordTypesDehightlight(this.innerText)">'+chr_type[0]+'</div>';
+	for (chr_type of chords) document.querySelector('#typetable').innerHTML += '<div onmouseover="chordTypesHightlight(\''+chr_type[0]+'\')" onmouseleave="chordTypesDehightlight(\''+chr_type[0]+'\')">'+chr_type[0]+'</div>';
 	for (chr_prime of notes[0]) {
 		document.querySelector('#chords').innerHTML += '<div id="prime_'+chr_prime+'"></div>';
 		document.querySelector('#prime_'+chr_prime).innerHTML += '<div class="chordwrap"><div class="prime_0" onmouseleave="hoverTimer()" onmouseover="hightlight(\''+chr_prime+'\')"><sup class="chordsstep"></sup><div class="chordsprimes">'+chr_prime+'</div></div></div>';
@@ -472,7 +472,7 @@ function invertTheme() {
 	let tmpbody = document.querySelector('body');
 	if (localStorage.getItem('invertedColors')==0 || localStorage.getItem('invertedColors')===null) {
 		tmpbody.style.background = '#fff';
-		tmpbody.style.filter = 'invert()';
+		tmpbody.style.filter = 'invert(1)';
 		localStorage.setItem('invertedColors', 1);
 	} else {
 		tmpbody.style.background = '#000';
@@ -484,6 +484,6 @@ function invertTheme() {
 if (localStorage.getItem('invertedColors')==1) {
 	let tmpbody = document.querySelector('body');
 	tmpbody.style.background = '#fff';
-	tmpbody.style.filter = 'invert()';
+	tmpbody.style.filter = 'invert(1)';
 }
 
