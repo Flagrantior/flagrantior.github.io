@@ -194,7 +194,7 @@ select {
 	transform: scale(1.5);
 }
 
-#Chords {
+#chords {
 	flex-basis: auto;
 	/*min-height: 5em;*/
 	max-width: 100vw;
@@ -232,7 +232,7 @@ select {
 	width: 4em;
 }
 
-#Chords div div:hover {
+#chords div div:hover {
 	transform: scale(1.05);
 }
 
@@ -255,7 +255,7 @@ select {
 	flex: 1;
 }
 
-#Chords > div:hover {
+#chords > div:hover {
 	color: #fff;
 }
 
@@ -324,7 +324,7 @@ select {
 	color: #C3C3C3;
 }
 
-#Preloader > p {display:none}
+#preloader > p {display:none}
 
 #preloader_preload {
 	position: fixed;
@@ -359,7 +359,7 @@ select {
 	text-decoration: underline;
 }
 
-#Piano {
+#piano {
 	padding-top: 10px;
 	display: flex;
 	justify-content: center;
@@ -367,13 +367,13 @@ select {
 	width: 100%;
 }
 
-#Piano > svg {
+#piano > svg {
 	width: 40%;
 	min-width: 20em;
 	height: 75px;
 }
 
-#Piano rect {
+#piano rect {
 	cursor: pointer;
 }
 
@@ -418,13 +418,13 @@ select {
 }
 
 @media(orientation: portrait) {
-	#Piano > svg {
+	#piano > svg {
 		height: 70px;
 		min-width: 0;
 		width: 100%;
 	}
 
-	#Chords {
+	#chords {
 		/*min-height: 13em;*/
 		flex-direction: row;
 		overflow-x: auto;
@@ -432,7 +432,7 @@ select {
 		width: 95vw;
 	}
 
-	#Chords > div {
+	#chords > div {
 		border-left-style: solid;
 		border-width: 1px;
 		border-left-color: #1E1E1E;
@@ -440,7 +440,7 @@ select {
 		flex-direction: column;
 	}
 
-	#Chords div div {
+	#chords div div {
 		height: 1em;
 		text-align: left;
 	}
