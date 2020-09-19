@@ -1,4 +1,4 @@
-<!DOCTYPE htm>
+<!DOCTYPE html>
 
 <head>
     <title>FLAGRANTIOR</title>
@@ -17,8 +17,8 @@
 <body>
     <div id="guitarwrap">
         <svg id="guitar">
-            <g id="Frets"></g>
-            <g id="Strings"></g>
+            <g id="frets"></g>
+            <g id="strings"></g>
             <g id="gnotes"></g>
             <g>
                 <circle r="2px" cx="30.21%" cy="5%" fill="white"/><circle r="2px" cx="30.21%" cy="95%" fill="white"/>
@@ -50,7 +50,7 @@
             <div id="conso_10"></div>
             <div id="conso_11"></div>
         </div>
-        <div id=Scale>
+        <div id=scale>
             <div id="C" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">C</div>
             <div id="Db" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">Db</div>
             <div id="D" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">D</div>
@@ -69,7 +69,7 @@
                 <form onsubmit="retune(); return false">[<input value="EADGBE">]</form>
                 <div onclick="retune()">TUNE</div>
             </div>
-            <div id="Notedisp" onclick="newNoteDisp()">DISPLAY</div>
+            <div id="notedisp" onclick="newNoteDisp()">DISPLAY</div>
             <select id="scaleslist" onchange="rescale(this.value); this.value='scale'; hoverTimer()">
                 <option value="scale" selected="" disabled="" hidden="">SCALES</option>
                 <option value="000000000000" style="color: grey">empty</option>
@@ -91,11 +91,11 @@
             </select>
         </div>
     </div>
-    <div id="Piano">
+    <div id="piano">
         <svg>
         </svg>
     </div>
-    <div id="Chords"></div>
+    <div id="chords"></div>
     <div id="menu">
         <div id="leftpanel">
             <div style="cursor: pointer; font-size: 1.7em" onclick="document.querySelector('#donate').style.display='flex'">DONATE</div>
@@ -136,7 +136,7 @@
     <div id="showhint" onclick="showHint()">▼</div>
     <img id="hint" src="/hint/DARKHINT_H.png">
     <div id="copyright">© Valentin Gaan, 2019-20</div>
-    <div id="Preloader"><div id="preloader_preload"></div></div>
+    <div id="preloader"><div id="preloader_preload"></div></div>
     <div id="donate"><div style="font-size: 1.4em">4276 5500 8178 1885</div><div>ВАЛЕНТИН ВИКТОРОВИЧ ГААН</div><div>VALENTIN VIKTOROVICH GAAN</div><img id="donate_closer" onclick="document.querySelector('#donate').style.display='none'" src="/media/closer.svg"></img></div>
     <script src="js.js"></script>
 </body>

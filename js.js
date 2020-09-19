@@ -41,7 +41,7 @@ function toBool(x) {
 toBool(scale);
 
 function drawFrets() {
-	let infrets = document.querySelector('#Frets');
+	let infrets = document.querySelector('#frets');
 	infrets.innerHTML = '<line x1="3.7%" y1="8%" x2="3.7%" y2="92%" stroke-width="1px" stroke="'+colors.fg+'"></line>';
 	for (let i=0; i<=frets; i++) {
 		infrets.innerHTML += '<line x1="'+(6.3*i-(i*i*0.1)+4)+'%" y1="10%" x2="'+(6.3*i-(i*i*0.1)+4)+'%" y2="90%" stroke-width="1px" stroke="'+colors.fg+'"></line>';
@@ -50,7 +50,7 @@ function drawFrets() {
 drawFrets();
 
 function drawString() {
-	let instrings = document.querySelector('#Strings');
+	let instrings = document.querySelector('#strings');
 	instrings.innerHTML = '';
 	for (let i=0; i<strings; i++) {
 		instrings.innerHTML += '<g id="str_'+i+'"><circle r="3px" cx="3%" cy="'+(100/(strings+1)*(i+1))+'%" fill="white"/><line x1="3%" y1="'+(100/(strings+1)*(i+1))+'%" x2="98.1%" y2="'+(100/(strings+1)*(i+1))+'%" stroke-width="'+(i*0.5+0.5)+'px" stroke="white"></line></g>'
@@ -103,15 +103,15 @@ for (i=0; i<chords.length; i++) {
 }
 
 function chordsStartDraw() {
-	document.querySelector('#Chords').innerHTML += '<div id="typetable"><div></div></div>';
-	for (chr_type of chords) document.querySelector('#typetable').innerHTML += '<div onmouseover="chordTypesHightlight(this.innerText)" onmouseleave="chordTypesDehightlight(this.innerText)">'+chr_type[0]+'</div>';
+	document.querySelector('#chords').innerHTML += '<div id="typetable"><div></div></div>';
+	for (chr_type of chords) document.querySelector('#typetable').innerHTML += '<div onmouseover="chordTypesHightlight(\''+chr_type[0]+'\')" onmouseleave="chordTypesDehightlight(\''+chr_type[0]+'\')">'+chr_type[0]+'</div>';
 	for (chr_prime of notes[0]) {
 		document.querySelector('#chords').innerHTML += '<div id="prime_'+chr_prime+'"></div>';
 		document.querySelector('#prime_'+chr_prime).innerHTML += '<div class="chordwrap"><div class="prime_0" onmouseleave="hoverTimer()" onmouseover="hightlight(\''+chr_prime+'\')"><sup class="chordsstep"></sup><div class="chordsprimes">'+chr_prime+'</div></div></div>';
 		let i = 0;
 		for (chr_type of chords) {i++; document.querySelector('#prime_'+chr_prime).innerHTML += `<div class="chordwrap"><div class="chr_${chr_type[0]}" onmouseover="this.style.color='rgb(${[255/100*chordsconso[i-1],255/100*chordsconso[i-1],255/100*chordsconso[i-1]]})'; chordHightlight(${notes[0].indexOf(chr_prime)}, [${chr_type[1]}])" onmouseleave="this.style.color='inherit'; chordDehighlight()">${chr_prime+chr_type[0]}</div></div>`};
 	}
-	document.querySelectorAll('#Chords > div > div')[1].innerText= 'M';
+	document.querySelectorAll('#chords > div > div')[1].innerText= 'M';
 }
 chordsStartDraw();
 
@@ -156,7 +156,7 @@ function showChords() {
 	}
 }
 
-let piano = document.querySelector('#Piano > svg');
+let piano = document.querySelector('#piano > svg');
 let pOffColor = '#131313'
 
 piano.innerHTML=`
@@ -188,7 +188,7 @@ piano.innerHTML=`
 
 function rescale(newscale, single=false) {
 	if (!single) {newscale = toBool(newscale)}
-	let inpanelnotes = document.querySelectorAll('#Scale > div');
+	let inpanelnotes = document.querySelectorAll('#scale > div');
 	for (i=0; i<12; i++) {
 		if (newscale[i]!=scale[i]) {
 			let innotes = document.querySelectorAll('#gnotes .'+notes[0][(i+root)%12]);
@@ -231,7 +231,7 @@ function singlerescale(innote) {
 
 function reroot(newroot) {
 	root = Number(newroot);
-	let innotes = document.querySelectorAll('#Scale > div');
+	let innotes = document.querySelectorAll('#scale > div');
 	for (i=0; i<12; i++) {
 		innotes[i].innerText = notes[0][(i+root)%12];
 		innotes[i].setAttribute('id', notes[0][(i+root)%12]);
@@ -326,7 +326,7 @@ function hightlight(note) {
 
 function newNoteDisp(stop=false) {
 	if (!stop) notedisp = (notedisp+1)%5;
-	let inpanelnotes = document.querySelectorAll('#Scale > div');
+	let inpanelnotes = document.querySelectorAll('#scale > div');
 	switch (notedisp) {
 		case 0:
 			for (i=0; i<12; i++) {
@@ -472,7 +472,7 @@ function invertTheme() {
 	let tmpbody = document.querySelector('body');
 	if (localStorage.getItem('invertedColors')==0 || localStorage.getItem('invertedColors')===null) {
 		tmpbody.style.background = '#fff';
-		tmpbody.style.filter = 'invert()';
+		tmpbody.style.filter = 'invert(1)';
 		localStorage.setItem('invertedColors', 1);
 	} else {
 		tmpbody.style.background = '#000';
@@ -484,6 +484,6 @@ function invertTheme() {
 if (localStorage.getItem('invertedColors')==1) {
 	let tmpbody = document.querySelector('body');
 	tmpbody.style.background = '#fff';
-	tmpbody.style.filter = 'invert()';
+	tmpbody.style.filter = 'invert(1)';
 }
 
