@@ -8,8 +8,7 @@ let ampl = 1;
 let speed = 0.1;
 let sphTail = 1000;
 let sphDetail = 1;
-let log = 1.1;
-let freqes = [[], [], []] // freq_index, amples, freq_log
+let freqes = [[], []];
 
 function draw() {
 	drawSph();
@@ -24,7 +23,7 @@ function addOsc() {
 	for (let i=0; i<freqes[0].length; i++) {
 		document.querySelector('#inputHz').innerHTML += 
 		`<div class="oscInputs" id="osc_${i}">
-			<input value="${freqes[0][i]}" class="oscHz" type="range" step="0.01" min="0" max="1000" oninput="freqes[0][${i}]=eval(this.value); freqes[2][${i^log}]; this.nextSibling.nextSibling.firstChild.value=this.value">
+			<input value="${freqes[0][i]}" class="oscHz" type="range" step="0.01" min="0" max="1000" oninput="freqes[0][${i}]=eval(this.value); this.nextSibling.nextSibling.firstChild.value=this.value">
 			[<form onsubmit="this.parentNode.querySelector('input').value=eval(this.firstChild.value); freqes[0][${i}]=eval(this.firstChild.value); return false;"><input value="${freqes[0][i]}" type="text" size="10"></form>]
 			<input value="${freqes[1][i]}" class="oscVol" type="range" step="0.01" min="0" max="2" oninput="freqes[1][${i}]=Number(this.value);">
 			<button onclick="delOsc(${i})">✖</button>
@@ -53,8 +52,8 @@ function drawSph() {
 		currentX = 0;
 		for (let i=0; i<freqes[0].length; i++) {
 			let temp = (freqes[0][i]/ctxSph.canvas.height * (x*zoom+timer));
-			currentY += Math.sin(temp)*freqes[2][i];
-			currentX += Math.cos(temp)*freqes[2][i];
+			currentY += Math.sin(temp)*freqes[1][i];
+			currentX += Math.cos(temp)*freqes[1][i];
 		}
 		currentX = currentX*ampl;
 		currentY = currentY*ampl;
@@ -73,7 +72,7 @@ function drawOsc() {
 	for (let x=0; x<=ctxOsc.canvas.width; x++) {
 		currentY = 0;
 		for (let i=0; i<freqes[0].length; i++) {
-			currentY += (Math.sin(freqes[0][i]/ctxOsc.canvas.width * (x*zoom+timer)) * freqes[2][i]);
+			currentY += (Math.sin(freqes[0][i]/ctxOsc.canvas.width * (x*zoom+timer)) * freqes[1][i]);
 		}
 		currentY = currentY*ampl;
 		ctxOsc.lineTo(x, ctxOsc.canvas.height/2 + ctxOsc.canvas.height/4 * (currentY));
@@ -107,6 +106,6 @@ function playTone(freq, gain) {
 
 function playTones() {
 	for (let i=0; i<freqes[0].length; i++) {
-		playTone(freqes[0][i], freqes[2][i]*ampl);
+		playTone(freqes[0][i], freqes[1][i]*ampl);
 	}
 }
