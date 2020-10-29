@@ -385,6 +385,7 @@ select {
 	font-family: Roboto;
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
 }
 
 #horn > div:hover {
