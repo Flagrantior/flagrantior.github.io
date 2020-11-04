@@ -368,8 +368,7 @@ select {
 }
 
 #piano > svg {
-	width: 40%;
-	min-width: 20em;
+	min-width: 30em;
 	height: 75px;
 }
 
@@ -439,6 +438,7 @@ select {
 		border-left-color: #1E1E1E;
 		padding-left: 4px;
 		flex-direction: column;
+		justify-content: flex-start;
 	}
 
 	#chords div div {
