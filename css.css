@@ -369,6 +369,7 @@ select {
 
 #piano > svg {
 	min-width: 30em;
+	min-width: 35em;
 	height: 75px;
 }
 
@@ -421,7 +422,8 @@ select {
 	#piano > svg {
 		height: 70px;
 		min-width: 0;
-		width: 100%;
+		max-width: 30em;
+		width: 90%;
 	}
 
 	#chords {
