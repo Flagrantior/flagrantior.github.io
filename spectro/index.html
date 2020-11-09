@@ -100,13 +100,15 @@ function convertToMono(input) {
 	return merger
 }
 
-if (context.state != 'running') {
-	document.querySelector('#starter').style.display = 'flex';
-	document.querySelector('#starter').addEventListener('click', function() {
-		context.resume().then(() => {document.querySelector('#starter').remove()});
-	})
-} else {
-	document.querySelector('#starter').style.display = 'none'
+window.onload = function() {
+	if (context.state != 'running') {
+		document.querySelector('#starter').style.display = 'flex';
+		document.querySelector('#starter').addEventListener('click', function() {
+			context.resume().then(() => {document.querySelector('#starter').remove()});
+		})
+	} else {
+		document.querySelector('#starter').style.display = 'none'
+	}
 }
 
 </script>
