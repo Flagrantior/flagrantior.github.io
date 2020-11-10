@@ -50,7 +50,7 @@
             <div id="conso_10"></div>
             <div id="conso_11"></div>
         </div>
-        <div id="scale">
+        <div id=scale>
             <div id="C" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">C</div>
             <div id="Db" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">Db</div>
             <div id="D" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">D</div>
