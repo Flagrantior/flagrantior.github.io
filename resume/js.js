@@ -15,9 +15,9 @@ setTimeout(function() {
 	document.querySelector('#if_flag').src = '/';
 }, 3500);
 
-setTimeout(function() {
-	document.querySelector('#if_arro').src = 'https://arro-access.ru';
-}, 4500);
+//setTimeout(function() {
+	//document.querySelector('#if_arro').src = 'https://arro-access.ru';
+//}, 4500);
 
 setTimeout(function() {
 	document.querySelector('#if_qosta').src = 'https://qostaroom.kz';
