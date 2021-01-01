@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div id="visualContaiter">
-		<canvas id="spherical" width="400" height="400"></canvas>
+		<canvas id="lissajous" width="400" height="400"></canvas>
 		<canvas id="oscillo" width="700" height="400"></canvas>
 	</div>
 	<div id="inputOscillo">
@@ -46,6 +46,10 @@
 				<tr>
 					<td>TAIL:</td>
 					<td><input id="rr_tail" type="range" step="1" min="0" max="2000" oninput="sphTail=Number(this.value)"></td>
+				</tr>
+				<tr>
+					<td>LISS:</td>
+					<td><input id="rr_offLis" type="range" step="0.01" min="0" max="20" oninput="offLis=Number(this.value)"></td>
 				</tr>
 	        </table>
 		</div>

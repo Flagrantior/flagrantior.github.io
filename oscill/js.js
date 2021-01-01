@@ -1,4 +1,4 @@
-let ctxSph = document.querySelector('#spherical').getContext('2d');
+let ctxLis = document.querySelector('#lissajous').getContext('2d');
 let ctxOsc = document.querySelector('#oscillo').getContext('2d');
 let currentY = 0;
 let currentX = 0;
@@ -11,7 +11,7 @@ let sphDetail = 1;
 let freqes = [[], []];
 
 function draw() {
-	drawSph();
+	drawLis();
 	drawOsc();
 	timer+=speed;
 } let timerId = setInterval(draw, 10);
@@ -30,6 +30,8 @@ function addOsc() {
 		</div>`;
 	}
 } addOsc()
+document.querySelector('.oscHz').value = 440;
+freqes[0][0]=eval(440);
 
 function delOsc(id) {
 	freqes[0].splice(id, 1);
@@ -37,31 +39,32 @@ function delOsc(id) {
 	document.querySelector(`#osc_${id}`).remove();
 }
 
+ctxLis.lineWidth = 1;
 ctxOsc.lineWidth = 1;
-ctxSph.lineWidth = 1;
+ctxLis.strokeStyle = '#fff';
 ctxOsc.strokeStyle = '#fff';
-ctxSph.strokeStyle = '#fff';
+ctxLis.fillStyle = '#000';
 ctxOsc.fillStyle = '#000';
-ctxSph.fillStyle = '#000';
 
-function drawSph() {
-	ctxSph.fillRect(0, 0, ctxSph.canvas.width, ctxSph.canvas.height);
+let offLis = 0;
+
+function drawLis() {
+	ctxLis.fillRect(0, 0, ctxLis.canvas.width, ctxLis.canvas.height);
 
 	for (let x=0; x<=sphTail; x=x+(sphDetail)) {
 		currentY = 0;
 		currentX = 0;
 		for (let i=0; i<freqes[0].length; i++) {
-			let temp = (freqes[0][i]/ctxSph.canvas.height * (x*zoom+timer));
-			currentY += Math.sin(temp)*freqes[1][i];
-			currentX += Math.cos(temp)*freqes[1][i];
+			currentY += Math.sin(freqes[0][i]/ctxLis.canvas.height * (x*zoom+timer))*freqes[1][i];
+			currentX += Math.cos(freqes[0][i]/ctxLis.canvas.height * (x*zoom+timer+offLis))*freqes[1][i];
 		}
 		currentX = currentX*ampl;
 		currentY = currentY*ampl;
-		ctxSph.lineTo(ctxSph.canvas.width/2+ctxSph.canvas.width/4*currentX, ctxSph.canvas.height/2+ctxSph.canvas.height/4*currentY);
+		ctxLis.lineTo(ctxLis.canvas.width/2+ctxLis.canvas.width/4*currentX, ctxLis.canvas.height/2+ctxLis.canvas.height/4*currentY);
 	}
 
-	ctxSph.stroke();
-	ctxSph.beginPath();
+	ctxLis.stroke();
+	ctxLis.beginPath();
 	currentY = 0;
 	currentX = 0;
 }
@@ -89,6 +92,7 @@ document.querySelector('#rr_zoom').value = 0.95;
 document.querySelector('#rr_speed').value = 0.1;
 document.querySelector('#rr_detail').value = 2;
 document.querySelector('#rr_tail').value = 1000;
+document.querySelector('#rr_offLis').value = 0;
 
 function playTone(freq, gain) {
     let context = new AudioContext();
@@ -109,3 +113,4 @@ function playTones() {
 		playTone(freqes[0][i], freqes[1][i]*ampl);
 	}
 }
+
