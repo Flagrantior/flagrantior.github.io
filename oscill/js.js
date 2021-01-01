@@ -32,6 +32,7 @@ function addOsc() {
 } addOsc()
 document.querySelector('.oscHz').value = 440;
 freqes[0][0]=eval(440);
+document.querySelector('#osc_0 form input').value = 440;
 
 function delOsc(id) {
 	freqes[0].splice(id, 1);
