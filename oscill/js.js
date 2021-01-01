@@ -4,7 +4,7 @@ let currentY = 0;
 let currentX = 0;
 let timer = 0;
 let zoom = 0.05;
-let ampl = 1;
+let ampl = 0.5;
 let speed = 0.1;
 let sphTail = 1000;
 let sphDetail = 1;
@@ -88,7 +88,7 @@ function drawOsc() {
 
 draw();
 
-document.querySelector('#rr_ampl').value = 1;
+document.querySelector('#rr_ampl').value = 0.5;
 document.querySelector('#rr_zoom').value = 0.95;
 document.querySelector('#rr_speed').value = 0.1;
 document.querySelector('#rr_detail').value = 2;
