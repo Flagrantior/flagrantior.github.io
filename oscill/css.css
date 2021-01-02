@@ -33,7 +33,7 @@ button {
 	cursor: pointer;
 }
 
-#visualContaiter {
+#visualContainer {
 	width: 90vw;
 	display: flex;
 	justify-content: center;
@@ -48,14 +48,14 @@ button {
 	flex-direction: column;
 }
 
-#spherical {
+#lissajous {
 	width: 40%;
-  max-width: 400px;
+	max-width: 400px;
 }
 
 #oscillo {
 	width: 60%;
-  max-width: 700px;
+	max-width: 700px;
 }
 
 #inputOscillo {
@@ -194,4 +194,16 @@ input[type=range]:focus::-ms-fill-lower {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #F2F2F2;
+}
+
+@media(orientation: portrait) {
+
+	#visualContainer {
+		width: 100vw;
+	}
+
+	#lissajous, #oscillo {
+		width: 100%;
+	}
+
 }
