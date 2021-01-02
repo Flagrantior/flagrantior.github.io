@@ -25,7 +25,7 @@ function addOsc() {
 		document.querySelector('#inputHz').innerHTML += 
 		`<div class="oscInputs" id="osc_${i}">
 			<input value="${freqes[0][i]}" class="oscHz" type="range" step="0.01" min="${r_min}" max="${r_max}" oninput="freqes[0][${i}]=eval(this.value); this.nextSibling.nextSibling.firstChild.value=this.value">
-			[<form onsubmit="this.parentNode.querySelector('input').value=eval(this.firstChild.value); freqes[0][${i}]=eval(this.firstChild.value); return false;"><input value="${freqes[0][i]}" type="text" size="4"></form>]
+			[<form onsubmit="this.parentNode.querySelector('input').value=eval(this.firstChild.value); freqes[0][${i}]=eval(this.firstChild.value); return false;"><input value="${freqes[0][i]}" type="text" size="5"></form>]
 			<input value="${freqes[1][i]}" class="oscVol" type="range" step="0.01" min="0" max="2" oninput="freqes[1][${i}]=Number(this.value);">
 			<button onclick="delOsc(${i})">X</button>
 		</div>`;
