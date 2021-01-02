@@ -101,6 +101,12 @@ button {
 	text-align: right;
 }
 
+#r_min, #r_max {
+	background: #000;
+	border: none;
+	color: #fff;
+}
+
 /*input nuller*/
 
 input[type=range] {

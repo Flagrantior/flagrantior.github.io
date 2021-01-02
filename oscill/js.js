@@ -9,6 +9,9 @@ let speed = 0.1;
 let sphTail = 1000;
 let sphDetail = 1;
 let freqes = [[], []];
+let r_min = 0;
+let r_max = 1000;
+let offLis = 0;
 
 function draw() {
 	drawLis();
@@ -23,7 +26,7 @@ function addOsc() {
 	for (let i=0; i<freqes[0].length; i++) {
 		document.querySelector('#inputHz').innerHTML += 
 		`<div class="oscInputs" id="osc_${i}">
-			<input value="${freqes[0][i]}" class="oscHz" type="range" step="0.01" min="0" max="1000" oninput="freqes[0][${i}]=eval(this.value); this.nextSibling.nextSibling.firstChild.value=this.value">
+			<input value="${freqes[0][i]}" class="oscHz" type="range" step="0.01" min="${r_min}" max="${r_max}" oninput="freqes[0][${i}]=eval(this.value); this.nextSibling.nextSibling.firstChild.value=this.value">
 			[<form onsubmit="this.parentNode.querySelector('input').value=eval(this.firstChild.value); freqes[0][${i}]=eval(this.firstChild.value); return false;"><input value="${freqes[0][i]}" type="text" size="10"></form>]
 			<input value="${freqes[1][i]}" class="oscVol" type="range" step="0.01" min="0" max="2" oninput="freqes[1][${i}]=Number(this.value);">
 			<button onclick="delOsc(${i})">✖</button>
@@ -47,7 +50,8 @@ ctxOsc.strokeStyle = '#fff';
 ctxLis.fillStyle = '#000';
 ctxOsc.fillStyle = '#000';
 
-let offLis = 0;
+document.querySelector('#Er_min').value = r_min;
+document.querySelector('#Er_max').value = r_max;
 
 function drawLis() {
 	ctxLis.fillRect(0, 0, ctxLis.canvas.width, ctxLis.canvas.height);
@@ -115,3 +119,8 @@ function playTones() {
 	}
 }
 
+function rerangeOsc() {
+	document.querySelectorAll('.oscHz').forEach((e, i) => {e.min=r_min; e.max=r_max; e.value=freqes[0][i]});
+}
+
+//
