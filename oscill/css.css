@@ -200,6 +200,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 	#visualContainer {
 		width: 100%;
+		flex-direction: column-reverse;
 	}
 
 	#lissajous, #oscillo {
