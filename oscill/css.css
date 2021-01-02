@@ -206,4 +206,13 @@ input[type=range]:focus::-ms-fill-upper {
 		width: 100%;
 	}
 
+	#inputHz {
+		width: 100%;
+	}
+
+	.oscInputs {
+		padding-right: 0.5em;
+	}
+
 }
+
