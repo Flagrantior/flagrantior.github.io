@@ -1,7 +1,6 @@
 let ctxLis = document.querySelector('#lissajous').getContext('2d');
 let ctxOsc = document.querySelector('#oscillo').getContext('2d');
-let currentY = 0;
-let currentX = 0;
+let currentY = 0; let currentX = 0;
 let timer = 0;
 let zoom = 0.05;
 let ampl = 0.5;
@@ -9,8 +8,7 @@ let speed = 0.1;
 let sphTail = 1000;
 let sphDetail = 1;
 let freqes = [[], []];
-let r_min = 0;
-let r_max = 1000;
+let r_min = 0; let r_max = 1000;
 let offLis = 0;
 
 function draw() {
@@ -43,12 +41,9 @@ function delOsc(id) {
 	document.querySelector(`#osc_${id}`).remove();
 }
 
-ctxLis.lineWidth = 1;
-ctxOsc.lineWidth = 1;
-ctxLis.strokeStyle = '#fff';
-ctxOsc.strokeStyle = '#fff';
-ctxLis.fillStyle = '#000';
-ctxOsc.fillStyle = '#000';
+ctxLis.lineWidth = 1; ctxOsc.lineWidth = 1;
+ctxLis.strokeStyle = '#fff'; ctxOsc.strokeStyle = '#fff';
+ctxLis.fillStyle = '#000'; ctxOsc.fillStyle = '#000';
 
 document.querySelector('#Er_min').value = r_min;
 document.querySelector('#Er_max').value = r_max;
@@ -123,4 +118,3 @@ function rerangeOsc() {
 	document.querySelectorAll('.oscHz').forEach((e, i) => {e.min=r_min; e.max=r_max; e.value=freqes[0][i]});
 }
 
-//
