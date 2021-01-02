@@ -199,7 +199,7 @@ input[type=range]:focus::-ms-fill-upper {
 @media(orientation: portrait) {
 
 	#visualContainer {
-		width: 100vw;
+		width: 100%;
 	}
 
 	#lissajous, #oscillo {
