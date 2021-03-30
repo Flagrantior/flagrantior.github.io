@@ -369,7 +369,7 @@ select {
 
 #piano > svg {
 	min-width: 30em;
-	min-width: 35em;
+	max-width: 35em;
 	height: 75px;
 }
 
