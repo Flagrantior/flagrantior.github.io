@@ -465,11 +465,11 @@ const linked = () => {
 			<b><a href="/hint/DARKHINT_H.png">HINT</a></b>
 			<a href="/oscill">OSCILL</a>
 			<a href="/spectro">SPECTRO</a>
-			<a href="/v2">OLD SITE</a>
+			<a href="mailto:flagrantior@gmail.com">EMAIL</a>
 			<a href="https://t.me/roitnargalf">TG BLOG</a>
 			<a href="https://t.me/flagrantior">TELEGRAM</a>
 			<a href="https://instagram.com/flagrantior">INSTAGRAM</a>
-			<a href="mailto:flagrantior@gmail.com">EMAIL</a>
+			<div>Valentin Gaan</div>
 		</div>`);
 	}
 }
