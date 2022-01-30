@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
     <title>FLAGRANTIOR</title>
-    <meta charset="utf-8"/>
     <meta name="description" content="The interactive web-app for musicians. Study, experiment, create."/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href="css.css" rel="stylesheet"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css.css" rel="stylesheet"/>
     <link rel="icon" href="media/favicon.svg"/>
     <link rel="icon" type="image/x-icon" href="media/favicon.ico"/>
     <link rel="icon" type="image/svg+xml" href="media/favicon.svg"/>
@@ -14,152 +14,5 @@
     <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-152738341-1');</script>
 	<script data-ad-client="ca-pub-5962417488513523" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
-<body>
-    <div id="guitarwrap">
-        <svg id="guitar">
-            <g id="frets"></g>
-            <g id="strings"></g>
-            <g id="gnotes"></g>
-            <g>
-                <circle r="2px" cx="30.21%" cy="5%" fill="white"/><circle r="2px" cx="30.21%" cy="95%" fill="white"/>
-                <circle r="2px" cx="40.62%" cy="5%" fill="white"/><circle r="2px" cx="40.62%" cy="95%" fill="white"/>
-                <circle r="2px" cx="62.61%" cy="5%" fill="white"/><circle r="2px" cx="62.61%" cy="95%" fill="white"/>
-                <circle r="2px" cx="63.61%" cy="5%" fill="white"/><circle r="2px" cx="63.61%" cy="95%" fill="white"/>
-                <circle r="2px" cx="80.65%" cy="5%" fill="white"/><circle r="2px" cx="80.65%" cy="95%" fill="white"/>
-                <circle r="2px" cx="86.26%" cy="5%" fill="white"/><circle r="2px" cx="86.26%" cy="95%" fill="white"/>
-                <circle r="2px" cx="96.33%" cy="5%" fill="white"/><circle r="2px" cx="96.33%" cy="95%" fill="white"/>
-                <circle r="2px" cx="97.33%" cy="5%" fill="white"/><circle r="2px" cx="97.33%" cy="95%" fill="white"/>
-            </g>
-        </svg>
-    </div>
-    <div id="scalepanel">
-        <div id="consoes">
-            <div id="conso_0" onmouseover="clearTimeout(note_hover_timer)" onmouseleave="hoverTimer()">
-                <div onclick="remode(getZeroOrder())" title="MOVE TO THIS MODE">M</div>
-                <div onclick="reroot(getZeroOrder())" title="SET AS ROOT">R</div>
-            </div>
-            <div id="conso_1"></div>
-            <div id="conso_2"></div>
-            <div id="conso_3"></div>
-            <div id="conso_4"></div>
-            <div id="conso_5"></div>
-            <div id="conso_6"></div>
-            <div id="conso_7"></div>
-            <div id="conso_8"></div>
-            <div id="conso_9"></div>
-            <div id="conso_10"></div>
-            <div id="conso_11"></div>
-        </div>
-        <div id="scale">
-            <div id="C" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">C</div>
-            <div id="Db" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">Db</div>
-            <div id="D" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">D</div>
-            <div id="Eb" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">Eb</div>
-            <div id="E" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">E</div>
-            <div id="F" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">F</div>
-            <div id="Gb" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">Gb</div>
-            <div id="G" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">G</div>
-            <div id="Ab" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">Ab</div>
-            <div id="A" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">A</div>
-            <div id="Bb" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">Bb</div>
-            <div id="B" onclick="singlerescale(this.id)" onmouseover="hightlight(this.id)" onmouseleave="hoverTimer()">B</div>
-        </div>
-        <div id="line1">
-            <div id="tune">
-                <form onsubmit="retune(); return false">[<input value="EADGBE">]</form>
-                <div onclick="retune()">TUNE</div>
-            </div>
-            <div id="notedisp" onclick="newNoteDisp()">DISPLAY</div>
-            <select id="scaleslist" onchange="rescale(this.value); this.value='scale'; hoverTimer()">
-                <option value="scale" selected="" disabled="" hidden="">SCALES</option>
-                <option value="000000000000" style="color: grey">empty</option>
-                <option value="101011010101">MAJOR</option>
-                <option value="101101011010">MINOR</option>
-                <option value="111111111111">CHROMATIC</option>
-                <option value="101011011001">HARMONIC MAJOR</option>
-                <option value="101101011001">HARMONIC MINOR</option>
-                <option value="101011011010">MELODIC MAJOR</option>
-                <option value="101101010101">MELODIC MINOR</option>
-                <option value="110011011001">DOUBLE HARMONIC MAJOR</option>
-                <option value="100101110010">DOUBLE HARMONIC MINOR</option>
-                <option value="100101010010">PENTATONIC</option>
-                <option value="100101110010">BLUES SEXTATONIC</option>
-                <option value="110011011010">PHRYGIAN DOMINANT</option>
-                <option value="110010101001">ENIGMATIC</option>
-                <option value="110101010101">NEAPOLITAN</option>
-                <option value="101100011000">JAPAN</option>
-            </select>
-        </div>
-    </div>
-    <div id="piano">
-        <svg>
-        </svg>
-    </div>
-    <div id="chords"></div>
-    <div id="menu">
-        <div id="leftpanel">
-            <div>BLACK:
-                <a title="DOWNLOAD WHITE VERTICAL PRINTHINT" href="/hint/DARKHINT_V.png" target="_blank">VERT</a>
-                <a title="DOWNLOAD WHITE HORIZONTAL PRINTHINT" href="/hint/DARKHINT_H.png" target="_blank">HORIZ</a>
-            </div>
-            <div>WHITE:
-                <a title="DOWNLOAD WHITE VERTICAL PRINTHINT" href="/hint/HINT_V.png" target="_blank">VERT</a>
-                <a title="DOWNLOAD WHITE HORIZONTAL PRINTHINT" href="/hint/HINT_H.png" target="_blank">HORIZ</a>
-            </div>
-			<div onclick="invertTheme()" style="user-select: none; corsor: pointer">
-				[INVERT]
-			</div>
-        </div>
-        <div id="horn">
-			<div><a href="./course/index.html">ДИСТАНЦИОННЫЕ УРОКИ ГИТАРЫ</a></div>
-        </div>
-        <img id="logo" src="media/logo.svg">
-        <div id="rightpanel">
-            <div style="display: flex; flex-direction: column;">
-                <b><a title="OSCILL" href="/oscill">OSCILL</a></b>
-                <b><a title="SPECTRO" href="/spectro">SPECTRO</a></b>
-		<div>
-                <a title="MY TELEGRAM BLOG" href="tg://resolve?domain=flagrantior">TGBLOG</a>
-		<a title="MY MUSIC" href="https://soundcloud.com/flagrantior">MUSIC</a>
-		</div>
-		<div>
-                <a title="MY MAIL" href="mailto:flagrantior@gmail.com">EMAIL</a>
-		<a title="TELEGRAM" href="tg://resolve?domain=roitnargalf">TG</a>
-	        <a title="INSTAGRAM" href="https://instagram.com/flagrantior">IG</a>
-	        <!-- <a title="VKONTAKTE" href="https://vk.com/flagrantior">VK</a> -->
-		</div>
-		<!-- <div> --><!-- <a title="FACEBOOK" href="https://www.facebook.com/flagrantior">FB</a> --><!-- </div> -->
-            </div>
-        </div>
-    </div>
-    <div id="showhint" onclick="showHint()">▼</div>
-    <img id="hint" src="/hint/DARKHINT_H.png">
-    <div id="copyright">© Valentin Gaan, 2019-20</div>
-    <div id="preloader"><div id="preloader_preload"></div></div>
-    <div id="donateme" style="display: none; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0, 0.9); z-index: 9999; position: absolute; left: 0; right: 0; height: 100%; width: 100%;">
-        <div style="background: #000; color: #0ff; font-family: 'Raleway'; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 3em; border-style: solid; border-width: 1px; border-color: #0ff">
-            <h3>Хай-с</h3>
-            <p style="user-select: text;">
-                Проект жив, но держится на вдохновении, которого нет.</br>Вы можете поддержать донатом, буду признателен.</br>
-                Скоро выйдет новый большой релиз.
-                <table>
-                    <tr>
-                        <td align="right">SBER:</td>
-                        <td style="user-select: all">4276 5500 8178 1885</td>
-                    </tr>
-                    <tr>
-                        <td align="right">PAYPAL:</td>
-                        <td><a href="https://paypal.me/raypandanii">paypal.me/raypandanii</a></td>
-                    </tr>
-                    <tr>
-                        <td align="right">EMAIL:</td>
-                        <td style="user-select: all">flagrantior@gmail.com</td>
-                    </tr>
-                </table>
-            </p>
-            <button onclick="this.parentNode.parentNode.remove()" style="color: #000; font-size: 1.2em; background: #0ff; border: none;"><b>СКРЫТЬ<b/></button>
-        </div>
-    </div>
-    <script src="js.js"></script>
-</body>
+<body><script type="text/javascript" src="js.js"></script></body>
 </html>
