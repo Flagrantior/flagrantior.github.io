@@ -9,8 +9,9 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/index.html",
+    "start_url": ".",
     "display": "fullscreen",
+	"orientation": "any",
     "theme_color": "#000000",
     "background_color": "#000000"
 }

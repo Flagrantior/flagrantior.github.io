@@ -1,6 +1,10 @@
 // autor: Gaan Valentin : flagrantior@gmail.com
 'use strict';
 
+//window.addEventListener('load', async () => {
+	//if ('serviceWorker' in navigator) await navigator.serviceWorker.register('sw.js')
+//});
+
 let consomode = false;
 let root = 0; // C
 let scale = 0b101010110101;
@@ -39,8 +43,7 @@ const precolors = [
 	},
 ]
 
-let colors = (localStorage.getItem('colors')!==null)?
-	JSON.parse(localStorage.getItem('colors')) : precolors[0];
+let colors = JSON.parse(localStorage.getItem('colors')) ?? precolors[0];
 
 const consocolor = (k) => {
 	return `#${[...Array(3).keys()].map(v => { return Math.round(
@@ -80,7 +83,7 @@ const scales = new Map([
 
 const toggleconso = (newmode=null) => {
 	const button = document.querySelector('#panelconso');
-	consomode = (newmode===null)? !consomode : newmode;
+	consomode = newmode ?? !consomode;
 	if (consomode) {
 		button.style.background=colors.panel_fg;
 		button.style.color=colors.panel_bg;
@@ -121,7 +124,7 @@ const renders = () => {
 const palette = (redraw=false) => {
 	if (redraw) document.querySelector('#palette').remove();
 	if (redraw) console.log(1);
-	if (document.querySelector('#palette')===null) {
+	if (document.querySelector('#palette') === null) {
 		document.querySelector('body').innerHTML += `<div id="palette"><div id="precolors">${
 			precolors.map((preset, pid) =>
 				`<div style="width:100%; height:1em; background:linear-gradient(90deg, ${[
@@ -146,14 +149,10 @@ const palette = (redraw=false) => {
 
 
 const stringed = {
-	zeroes: (localStorage.getItem('stringed_zeroes')!==null)?
-		JSON.parse(localStorage.getItem('stringed_zeroes')) : [4, 11, 7, 2, 9, 4, 11, 6, 1, 8, 3, 10],
-	frets: (localStorage.getItem('stringed_frets')!==null)?
-		JSON.parse(localStorage.getItem('stringed_frets')) : 24,
-	strings: (localStorage.getItem('stringed_strings')!==null)?
-		JSON.parse(localStorage.getItem('stringed_strings')) : 6,
-	fretted: (localStorage.getItem('stringed_fretted')!==null)?
-		JSON.parse(localStorage.getItem('stringed_fretted')) : true,
+	zeroes: JSON.parse(localStorage.getItem('stringed_zeroes')) ?? [4, 11, 7, 2, 9, 4, 11, 6, 1, 8, 3, 10],
+	frets: JSON.parse(localStorage.getItem('stringed_frets')) ?? 24,
+	strings: JSON.parse(localStorage.getItem('stringed_strings')) ?? 6,
+	fretted: JSON.parse(localStorage.getItem('stringed_fretted')) ?? true,
 
 	render: () => {
 		if (document.querySelector('#stringed') === null)
@@ -350,9 +349,8 @@ const panel = {
 	},
 
 	shader: (k=null, chord=null) => {
-		document.querySelector('#panel #scaleslist').value =
-			(chord!==null)? chord
-			: ((scales.get(scale) !== undefined)? scale : '');
+		document.querySelector('#panel #scaleslist').value = chord ??
+			((scales.get(scale) !== undefined)? scale : '');
 		document.querySelectorAll('#panel svg g circle').forEach((circle, cid) =>
 			circle.setAttribute('fill', (consomode)?
 				((scale >> (cid+12-root)%12 & 1)? consocolor((cid+12-k)%12) : colors.panel_off_bg)
@@ -442,7 +440,7 @@ const chords = {
 	},
 	
 	conso: (k=0, chord, origin) => {
-		if (origin.firstChild.style.display==='block') {
+		if (origin.firstChild.style.display === 'block') {
 			let temproot=root;
 			let tempscale=scale;
 			root=k; scale=chord;
@@ -460,7 +458,7 @@ const chords = {
 
 
 const linked = () => {
-	if (document.querySelector('#linked')===null) {
+	if (document.querySelector('#linked') === null) {
 		document.write(`<div id="linked">
 			<b><a href="/hint/DARKHINT_H.png">HINT</a></b>
 			<a href="/oscill">OSCILL</a>
