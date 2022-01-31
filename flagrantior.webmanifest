@@ -1,0 +1,16 @@
+{
+    "name": "FLAGRANTIOR.ART - A musicians hint",
+    "short_name": "FLAGRANTIOR",
+    "description": "Interactive web-app for musicians: guitar/bowed/keyed.",
+    "icons": [
+        {
+            "src": "media/favicon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/index.html",
+    "display": "fullscreen",
+    "theme_color": "#000000",
+    "background_color": "#000000"
+}
