@@ -57,7 +57,7 @@ select {
 #stringed {
 	width: 100%;
 	margin-bottom: 0.5em;
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 #stringed > svg {
 	width: 100%;
@@ -87,7 +87,7 @@ select {
 	height: 8em;
 	display: flex;
 	justify-content: center;
-	overflow-x: scroll;
+	overflow-x: auto;
 	stroke: var(--keyed_bd);
 }
 #keyed > #keyedwrap {
@@ -191,7 +191,7 @@ select {
 	align-self: space-between;
 	margin-top: 1em;
 	color: var(--chords_fg);
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 #chordswrap {
 	display: flex;
@@ -251,7 +251,7 @@ select {
 #palette .colors {
 	display: flex;
 	flex-direction: column;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 #palette .colors > div {
 	display: flex;
