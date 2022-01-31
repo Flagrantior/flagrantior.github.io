@@ -94,7 +94,7 @@ select {
 	display: flex;
 	justify-content: center;
 	min-width: 15em;
-	max-width: 100%;
+	max-width: 30em;
 }
 #keyed .note:hover {
 	transition: .1s;
