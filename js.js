@@ -5,7 +5,7 @@
 	//if ('serviceWorker' in navigator) await navigator.serviceWorker.register('sw.js')
 //});
 
-const isntSafari = !navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/safari/i);
+const isntSafari = !navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/^((?!chrome|android).)*safari/i);
 let consomode = false;
 let root = 0; // C
 let scale = 0b101010110101;
