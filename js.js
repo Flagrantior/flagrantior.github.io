@@ -185,7 +185,7 @@ const stringed = {
 							<g class="note" onclick="toggle(${
 								(stringed.zeroes[(s)%12])%12})" opacity="0">
 								<circle stroke-width="1px" r="10px" cx="1.25%" cy="${y}%"/>
-								<text text-anchor="middle" alignment-baseline="middle" fill="${
+								<text text-anchor="middle" dominant-baseline="middle" fill="${
 									colors.stringed_notes_fg}" x="1.25%" y="${y+1.3}%">${
 									notes[alter][(stringed.zeroes[s%12])%12]}</text>
 							</g>
@@ -197,7 +197,7 @@ const stringed = {
 									(stringed.zeroes[s%12]+(f+1))%12})" opacity="0">
 									<circle r="10px" cx="${x}%" cy="${
 										y}%" stroke-width="1px"/>
-									<text text-anchor="middle" alignment-baseline="middle" fill="${
+									<text text-anchor="middle" dominant-baseline="middle" fill="${
 										colors.stringed_notes_fg}" x="${x}%" y="${y+1.3}%">${
 										notes[alter][(stringed.zeroes[s%12]+(f+1))%12]}</text>
 								</g>`
@@ -300,7 +300,7 @@ const panel = {
 								<circle onclick="panel.reroot(${n})" cx="${
 									35*Math.cos(angle)+50}" cy="${
 									35*Math.sin(angle)+50}" r="8"></circle>
-								<text text-anchor="middle" alignment-baseline="middle" x="${
+								<text text-anchor="middle" dominant-baseline="middle" x="${
 									35*Math.cos(angle)+50}" y="${35*Math.sin(angle)+50}"></text>
 							</g>`
 						}).join('')}</g>
