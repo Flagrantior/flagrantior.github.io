@@ -1,11 +1,6 @@
 // autor: Gaan Valentin : flagrantior@gmail.com
 'use strict';
 
-//window.addEventListener('load', async () => {
-	//if ('serviceWorker' in navigator) await navigator.serviceWorker.register('sw.js')
-//});
-
-const isntSafari = !navigator.vendor.match(/apple/i) && !navigator.userAgent.match(/^((?!chrome|android).)*safari/i);
 let consomode = false;
 let root = 0; // C
 let scale = 0b101010110101;
@@ -364,11 +359,6 @@ const panel = {
 	reroot: (n) => {
 		toggleconso(false);
 		scale=((scale+(scale*4096)>>(n+12-root)%12)&4095);
-		if (isntSafari) {
-			document.querySelector('#panel svg > g').setAttribute('transform', `rotate(${30*(12-n)})`);
-			document.querySelectorAll('#panel svg > g > g').forEach(
-				circle => circle.setAttribute('transform', `rotate(${30*(n)})`));
-		}
 		for (let i=12; i>(n+12-root)%12; i--) {
 			notes[1].push(notes[1].splice(0, 1)[0]);
 		}
