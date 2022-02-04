@@ -93,10 +93,9 @@ const toggleconso = (newmode=null) => {
 const toggle = (k=null) => {
 	if (!consomode) {
 		if (k!==null) scale^=(1<<((k+12-root)%12));
-		stringed.shader(); keyed.shader(); chords.shader(); panel.shader();
-	} else {
-		stringed.shader(k); keyed.shader(k); panel.shader(k);
+		chords.shader();
 	}
+	stringed.shader(k); keyed.shader(k); panel.shader(k);
 }
 
 const colorize = () => {
