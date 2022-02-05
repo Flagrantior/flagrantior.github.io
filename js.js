@@ -135,7 +135,7 @@ const palette = (redraw=false) => {
 					key}=this.value; renders()" value="${value}"></div>`
 				}).join('')
 			}</div><div class="buttons">
-			<div onclick="document.querySelector('#palette').remove()">CANCEL</div>
+			<div onclick="document.querySelector('#palette').remove()">CLOSE</div>
 			<div onclick="document.querySelector('#palette').remove();
 				localStorage.setItem('colors', JSON.stringify(colors))">SAVE</div></div></div>`
 		} else document.querySelector('#palette').remove();
