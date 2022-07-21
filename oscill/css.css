@@ -93,8 +93,12 @@ button {
 .osc_inputAdd {
 	cursor: pointer;
 	font-family: Raleway;
-	font-size: 4em;
-	padding-right: 30px;
+	font-size: 3.5em;
+	text-align: center;
+	margin-right: 30px;
+	height: 1em;
+	width: 1em;
+	overflow: hidden;
 }
 
 #rightRangers {
