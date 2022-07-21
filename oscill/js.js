@@ -39,7 +39,7 @@ function addOsc() {
 			<input value="${oscs[i].frequency.value}" class="oscHz" type="range" step="0.01" min="${r_min}" max="${r_max}" oninput="oscs[${i}].frequency.value=eval(this.value); this.nextSibling.nextSibling.firstChild.value=this.value">
 			[<form onsubmit="this.parentNode.querySelector('input').value=eval(this.firstChild.value); oscs[${i}].frequency.value=eval(this.firstChild.value); return false;"><input value="${oscs[i].frequency.value}" type="text" size="5"></form>]
 			<input value="${gains[i].gain.value}" class="oscVol" type="range" step="0.01" min="0" max="2" oninput="gains[${i}].gain.value=Number(this.value);">
-			<button onclick="delOsc(${i})">❌</button>
+			<button onclick="delOsc(${i})">X</button>
 		</div>`;
 	}
 

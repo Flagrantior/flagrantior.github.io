@@ -31,10 +31,10 @@
 					<td>RANGE:</td>
 					<td style="display: flex; justify-content: space-around;">
 						<form onsubmit="r_min=eval(document.querySelector('#Er_min').value); rerangeOsc(); return false">
-							[<input id="Er_min" size=5>]
+							[<input id="Er_min" onkeyup="this.value=this.value.replace(/[^\d]/,'')" size=5>]
 						</form>
 						<form onsubmit="r_max=eval(document.querySelector('#Er_max').value); rerangeOsc(); return false">
-							[<input id="Er_max" size=5>]
+							[<input id="Er_max" onkeyup="this.value=this.value.replace(/[^\d]/,'')" size=5>]
 						</form>
 					</td>
 				</tr>
