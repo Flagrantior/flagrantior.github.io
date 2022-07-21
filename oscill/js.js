@@ -46,8 +46,8 @@ function addOsc() {
 	playTones(); playTones();
 } addOsc()
 
-document.querySelector('.oscHz').value = 440;
-document.querySelector('#osc_0 form input').value = 440;
+document.querySelector('.oscHz').value = 55;
+document.querySelector('#osc_0 form input').value = 55;
 
 function delOsc(id) {
 	gains[id].disconnect();
