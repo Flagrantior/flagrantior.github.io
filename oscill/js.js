@@ -24,7 +24,7 @@ let osc_on = false;
 function addOsc() {
 	let osc = ctx.createOscillator();
 	let gain = ctx.createGain();
-	osc.frequency.value = 440;
+	osc.frequency.value = 55;
 	gain.gain.value = 1;
 	osc.connect(gain).connect(ctx.destination);
 	osc.type = 'sine';
