@@ -297,7 +297,7 @@ const panel = {
 						${[...Array(12).keys()].map(n => {
 							let angle = Math.PI/12*2*(n-3);
 							return `<g>
-								<circle onclick="panel.reroot(${n})" cx="${
+								<circle onclick="panel.reroot(${(n*7)%12})" cx="${
 									35*Math.cos(angle)+50}" cy="${
 									35*Math.sin(angle)+50}" r="8"></circle>
 								<text text-anchor="middle" dominant-baseline="middle" x="${
@@ -306,8 +306,7 @@ const panel = {
 						}).join('')}</g>
 					</svg>
 					<div id="panelbuttons">
-						<select id="scaleslist" onchange="
-							scale=parseInt(this.value); toggleconso(false); toggle()">
+						<select id="scaleslist" onchange="scale=parseInt(this.value); toggleconso(false); toggle()">
 							<option value="0" style="color: #777">Empty</option>
 							${[...scales].map(s => {
 								return `<option value="${s[0]}">${s[1]}</option>`
@@ -340,7 +339,7 @@ const panel = {
 			window.onload = () => panel.shader();
 		};
 		document.querySelectorAll('#panel svg g text').forEach((node, n) => {
-			node.innerHTML = notes[alter][n];
+			node.innerHTML = notes[alter][(n*7%12)];
 		});
 	},
 
@@ -349,11 +348,12 @@ const panel = {
 			((scales.get(scale) !== undefined)? scale : '');
 		document.querySelectorAll('#panel svg g circle').forEach((circle, cid) =>
 			circle.setAttribute('fill', (consomode)?
-				((scale >> (cid+12-root)%12 & 1)? consocolor((cid+12-k)%12) : colors.panel_off_bg)
-				: ((cid===root)? colors.panel_on_bg : colors.panel_off_bg)) );
+				((scale >> (cid*7+12-root)%12 & 1)? consocolor((cid*7+12-k)%12) : colors.panel_off_bg)
+				: (((cid*7)%12===root)? colors.panel_on_bg : colors.panel_off_bg)) );
 		document.querySelectorAll('#panel svg g text').forEach((text, tid) =>
-			text.setAttribute('fill', ((tid+24-k+((k!==null)? root : 0))%12===root)?
-				colors.panel_on_fg : colors.panel_off_fg));
+			text.setAttribute('fill', ((tid*7+24-k+((k!==null)? root : 0))%12===root)?
+				//colors.panel_on_fg : colors.panel_off_fg));
+				colors.panel_on_fg : (((scale>>(tid*7+24-root)%12)&1)? colors.panel_off_fg : colors.panel_off_fg+'66')));
 	},
 
 	reroot: (n) => {
