@@ -328,7 +328,7 @@ const panel = {
 								toggleconso(false)">FRETTED</div>
 							<div id="panelalter" onclick="
 								alter=(alter+1)%3; stringed.render(); keyed.shader();
-								panel.render(); panel.shader(); chords.render()">ALTER</div>
+								panel.render(); panel.shader(); chords.render(); toggleconso(false)">ALTER</div>
 						</div>
 						<div class="wrap">
 							<div onclick="palette()">THEME</div>
@@ -358,7 +358,7 @@ const panel = {
 
 	reroot: (n) => {
 		toggleconso(false);
-		scale=((scale+(scale*4096)>>(n+12-root)%12)&4095);
+		scale=((scale+(scale<<12)>>(n+12-root)%12)&4095);
 		for (let i=12; i>(n+12-root)%12; i--) {
 			notes[1].push(notes[1].splice(0, 1)[0]);
 		}
@@ -406,13 +406,14 @@ const chords = {
 
 	render: () => {
 		if (document.querySelector('#chords') === null)
-			document.write(`<div id="chords"><div id="chordswrap"></div></div>`);
+			document.write(`<div id="chords"><div id="chords_types">${
+				chords.chords.map((chord, cid) => {return `<div onclick="chords.primes(${cid})">${chord[1]}</div>`}).join('')}</div><div id="chordswrap"></div></div>`);
 		document.querySelector('#chordswrap').innerHTML = `
 			${notes[alter].map((prime, pid) => {
-					return `<div>${ chords.chords.map(c => {
-						return `<div class="chordwrap" onclick="chords.conso(${
-							[pid, (c[0]>>12|c[0]&4095)]}, this)"><div>${prime}${c[1]}</div></div>`
-					}).join('')}</div>`
+				return `<div>${chords.chords.map(c => {
+					return `<div class="chordwrap" onclick="chords.conso(${
+						[pid, (c[0]>>12|c[0]&4095)]}, this)"><div>${prime}${c[1]}</div></div>`
+				}).join('')}</div>`
 			}).join('')}`;
 		chords.shader();
 	},
@@ -434,8 +435,7 @@ const chords = {
 	
 	conso: (k=0, chord, origin) => {
 		if (origin.firstChild.style.display === 'block') {
-			let temproot=root;
-			let tempscale=scale;
+			let temproot=root, tempscale=scale;
 			root=k; scale=chord;
 			consomode && toggleconso(false);
 			stringed.shader(); keyed.shader(); panel.shader();
@@ -447,8 +447,21 @@ const chords = {
 			toggleconso(false);
 		};
 	},
-}
 
+	primes: cid => {
+		let temproot=root, tempscale=scale;
+		scale=0;
+		for (let i=0; i<12; i+=1) {
+			if ((((tempscale<<12)+tempscale)
+					| (((chords.chords[cid][0]>>12|chords.chords[cid][0])-(chords.chords[cid][0]>>12<<12)) <<i))
+					==(tempscale<<12)+tempscale)
+				scale+=2**i;
+		}
+		toggleconso(true);
+		stringed.shader(root); keyed.shader(root);
+		root=temproot; scale=tempscale;
+	},
+}
 
 const linked = () => {
 	if (document.querySelector('#linked') === null) {
@@ -457,9 +470,7 @@ const linked = () => {
 			<a href="/oscill">OSCILL</a>
 			<a href="/spectro">SPECTRO</a>
 			<a href="mailto:flagrantior@gmail.com">EMAIL</a>
-			<a href="https://t.me/roitnargalf">TG BLOG</a>
 			<a href="https://t.me/flagrantior">TELEGRAM</a>
-			<a href="https://instagram.com/flagrantior">INSTAGRAM</a>
 			<div>Valentin Gaan</div>
 		</div>`);
 	}

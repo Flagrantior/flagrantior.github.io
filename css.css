@@ -192,6 +192,8 @@ select {
 	margin-top: 1em;
 	color: var(--chords_fg);
 	overflow-x: auto;
+	overflow-y: hidden;
+	margin-bottom: 1em;
 }
 #chordswrap {
 	display: flex;
@@ -199,19 +201,26 @@ select {
 	justify-content: center;
 	text-align: center;
 }
-#chordswrap > div {
+#chordswrap > div, #chords_types {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	margin-left: 2px;
 	margin-right: 2px;
 }
-#chordswrap .chordwrap {
+#chords_types {
+	color: #999;
+	padding-right: 0.5em;
+}
+#chords_types > div {
+	align-self: flex-end;
+}
+#chordswrap .chordwrap, #chords_types > div {
 	height: 1em;
 	display: flex;
 	flex-direction: row;
 }
-#chords .chordwrap > div:hover {
+#chords .chordwrap > div:hover, #chords_types > div:hover {
 	transform: scale(1.1);
 	cursor: pointer;
 }
