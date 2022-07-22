@@ -209,7 +209,8 @@ select {
 	margin-right: 2px;
 }
 #chords_types {
-	color: #999;
+	color: var(--chords_fg);
+	opacity: 0.5;
 	padding-right: 0.5em;
 }
 #chords_types > div {
