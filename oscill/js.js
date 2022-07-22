@@ -15,7 +15,7 @@ function draw() {
 	timer+=speed;
 } let timerId = setInterval(draw, 10);
 
-let ctx = new AudioContext();
+let ctx = new (window.AudioContext || window.webkitAudioContext)();
 let oscs = [];
 let gains = [];
 let osc_on = false;
@@ -59,9 +59,6 @@ function delOsc(id) {
 ctxLis.lineWidth = 1; ctxOsc.lineWidth = 1;
 ctxLis.strokeStyle = '#fff'; ctxOsc.strokeStyle = '#fff';
 ctxLis.fillStyle = '#000'; ctxOsc.fillStyle = '#000';
-
-document.querySelector('#Er_min').value = r_min;
-document.querySelector('#Er_max').value = r_max;
 
 function drawLis() {
 	ctxLis.fillRect(0, 0, ctxLis.canvas.width, ctxLis.canvas.height);

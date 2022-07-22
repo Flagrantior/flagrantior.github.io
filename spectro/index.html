@@ -47,33 +47,44 @@ body {
 	cursor: pointer;
 }
 
+canvas {
+	width: 100%;
+	height: 100%;
+}
+/*
 @media(orientation: portrait) {
 	canvas {
 		transform: rotate(90deg);
 	}
 }
-
+*/
 </style>
 </head>
 <body>
 	<div id="starter">START</div>
-	<canvas width='1024' height='360' id='surface'></canvas>
+	<canvas width='2048' height='720' id='surface'></canvas>
 <script>
+	document.querySelector('canvas').setAtt
 processStream = function(stream) {
 	window.microphone = context.createMediaStreamSource(stream);
 	let analyser = context.createAnalyser();
 	let buffer = new Uint8Array(1024), paused=false;
 	let canvas = document.getElementById('surface'), ctx=canvas.getContext('2d');
+	ctx.canvas.width  = window.innerWidth;
+	ctx.canvas.height = window.innerHeight;
+	window.addEventListener("resize", () => {
+		ctx.canvas.width = window.innerWidth; ctx.canvas.height = window.innerHeight;
+	});
 	convertToMono(microphone).connect(analyser);
 	function process() {
 		window.requestAnimationFrame(process);
 		if (paused) return;
 		analyser.getByteFrequencyData(buffer);
 		ctx.drawImage(canvas,-1,0);
-		for (let i=360; i--;) {
-			let c = buffer[i];
+		for (let i=window.innerHeight; i--;) {
+			let c = buffer[Math.floor(1024/window.innerHeight*i)];
 			ctx.fillStyle = 'hsl('+(c/1.3+250)+',100%,'+c/2.55+'%)';
-			ctx.fillRect(1023, 360-i, 1, 1)
+			ctx.fillRect(window.innerWidth-1, window.innerHeight-i, 1, 1)
 		}
 	}
 	process();
@@ -83,7 +94,7 @@ processStream = function(stream) {
 }
 
 try {
-	var context = new window.AudioContext();
+	var context = new (window.AudioContext || window.webkitAudioContext)();
 	let err = function() {console.log('Error')}
 	if (navigator.webkitGetUserMedia)
 		navigator.webkitGetUserMedia({audio: true}, processStream, err);
