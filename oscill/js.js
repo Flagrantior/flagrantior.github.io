@@ -2,12 +2,11 @@ let ctxLis = document.querySelector('#lissajous').getContext('2d');
 let ctxOsc = document.querySelector('#oscillo').getContext('2d');
 let currentY = 0; let currentX = 0;
 let timer = 0;
-let zoom = 0.05;
+let zoom = 0.3;
 let ampl = 0.5;
 let speed = 0.1;
 let sphTail = 1000;
 let sphDetail = 1;
-let r_min = 1; let r_max = 1000;
 let offLis = 0;
 
 function draw() {
@@ -36,7 +35,7 @@ function addOsc() {
 	for (let i=0; i<oscs.length; i++) {
 		document.querySelector('#inputHz').innerHTML +=
 		`<div class="oscInputs" id="osc_${i}">
-			<input value="${oscs[i].frequency.value}" class="oscHz" type="range" step="0.01" min="${r_min}" max="${r_max}" oninput="oscs[${i}].frequency.value=eval(this.value); this.nextSibling.nextSibling.firstChild.value=this.value">
+			<input value="${oscs[i].frequency.value}" class="oscHz" type="range" step="0.01" min="0.01" max="1000" oninput="oscs[${i}].frequency.value=eval(this.value); this.nextSibling.nextSibling.firstChild.value=this.value">
 			[<form onsubmit="this.parentNode.querySelector('input').value=eval(this.firstChild.value); oscs[${i}].frequency.value=eval(this.firstChild.value); return false;"><input value="${oscs[i].frequency.value}" type="text" size="5"></form>]
 			<input value="${gains[i].gain.value}" class="oscVol" type="range" step="0.01" min="0" max="2" oninput="gains[${i}].gain.value=Number(this.value);">
 			<button onclick="delOsc(${i})">X</button>
@@ -114,8 +113,3 @@ function playTones() {
 	osc_on? oscs.map(osc => osc.disconnect()) : oscs.map((osc,i) => osc.connect(gains[i]).connect(ctx.destination));
 	osc_on = !osc_on;
 }
-
-function rerangeOsc() {
-	document.querySelectorAll('.oscHz').forEach((e, i) => {e.min=r_min; e.max=r_max; e.value=osos[i].frequency.value});
-}
-

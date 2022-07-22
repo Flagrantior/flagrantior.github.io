@@ -28,27 +28,16 @@
 			</div>
 	        <table id="rightRangers">
 				<tr>
-					<td>RANGE:</td>
-					<td style="display: flex; justify-content: space-around;">
-						<form onsubmit="r_min=eval(document.querySelector('#Er_min').value); rerangeOsc(); return false">
-							[<input id="Er_min" onkeyup="this.value=this.value.replace(/[^\d]/,'')" size=5>]
-						</form>
-						<form onsubmit="r_max=eval(document.querySelector('#Er_max').value); rerangeOsc(); return false">
-							[<input id="Er_max" onkeyup="this.value=this.value.replace(/[^\d]/,'')" size=5>]
-						</form>
-					</td>
-				</tr>
-				<tr>
 	                <td>AMPL:</td>
 	                <td><input id="rr_ampl" type="range" step="0.0005" min="0" max="1" oninput="ampl=Number(this.value)"></td>
 	            </tr>
 	            <tr>
 	                <td>ZOOM:</td>
-	                <td><input id="rr_zoom" type="range" step="0.001" min="0.001" max="1" oninput="zoom=Number(1-this.value)"></td>
+	                <td><input id="rr_zoom" type="range" step="0.000001" min="0.000001" max="1" oninput="zoom=Number(1-this.value)"></td>
 	            </tr>
 	            <tr>
 	                <td>SPEED:</td>
-	                <td><input id="rr_speed" type="range" step="0.001" min="0" max="3" oninput="speed=Number(this.value)"></td>
+	                <td><input id="rr_speed" type="range" step="0.001" min="0" max="50" oninput="speed=Number(this.value)"></td>
 	            </tr>
 	            <tr>
 					<td>DETAIL:</td>
