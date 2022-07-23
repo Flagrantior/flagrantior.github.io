@@ -348,11 +348,10 @@ const panel = {
 			((scales.get(scale) !== undefined)? scale : '');
 		document.querySelectorAll('#panel svg g circle').forEach((circle, cid) =>
 			circle.setAttribute('fill', (consomode)?
-				((scale >> (cid*7+12-root)%12 & 1)? consocolor((cid*7+12-k)%12) : colors.panel_off_bg)
+				((scale >> (cid*7+12-root)%12 & 1)? consocolor((cid*7+12-k)%12) : ((k===(cid*7)%12 && chord==null)? colors.panel_on_bg+'77' : colors.panel_off_bg))
 				: (((cid*7)%12===root)? colors.panel_on_bg : colors.panel_off_bg)) );
 		document.querySelectorAll('#panel svg g text').forEach((text, tid) =>
 			text.setAttribute('fill', ((tid*7+24-k+((k!==null)? root : 0))%12===root)?
-				//colors.panel_on_fg : colors.panel_off_fg));
 				colors.panel_on_fg : (((scale>>(tid*7+24-root)%12)&1)? colors.panel_off_fg : colors.panel_off_fg+'66')));
 	},
 
@@ -458,7 +457,7 @@ const chords = {
 				scale+=2**i;
 		}
 		toggleconso(true);
-		stringed.shader(root); keyed.shader(root);
+		stringed.shader(root); keyed.shader(root); panel.shader(root);
 		root=temproot; scale=tempscale;
 	},
 }
