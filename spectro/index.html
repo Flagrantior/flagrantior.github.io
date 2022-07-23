@@ -80,11 +80,11 @@ processStream = function(stream) {
 		window.requestAnimationFrame(process);
 		if (paused) return;
 		analyser.getByteFrequencyData(buffer);
-		ctx.drawImage(canvas,-1,0);
+		ctx.drawImage(canvas,-2,0);
 		for (let i=window.innerHeight; i--;) {
 			let c = buffer[Math.floor(1024/window.innerHeight*i)];
 			ctx.fillStyle = 'hsl('+(c/1.3+250)+',100%,'+c/2.55+'%)';
-			ctx.fillRect(window.innerWidth-1, window.innerHeight-i, 1, 1)
+			ctx.fillRect(window.innerWidth-50, window.innerHeight-i, 50, 1)
 		}
 	}
 	process();
