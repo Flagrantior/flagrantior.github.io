@@ -68,6 +68,7 @@ const scales = new Map([
 	[0b010010101001, 'Pentatonic'],
 	[0b100110110101, 'Harmonic Major'],
 	[0b100110101101, 'Harmonic Minor'],
+	[0b010110110011, 'Phrygian Dominant'],
 	[0b010110110101, 'Melodic Major'],
 	[0b101010101101, 'Melodic Minor'],
 	[0b100110110011, 'Double Harmonic Major'],
