@@ -63,19 +63,22 @@ ctxLis.fillStyle = '#000'; ctxOsc.fillStyle = '#000';
 function drawLis() {
 	ctxLis.fillRect(0, 0, ctxLis.canvas.width, ctxLis.canvas.height);
 
-	for (let x=0; x<=sphTail; x=x+(sphDetail)) {
+	for (let x=0; x<=sphTail; x=x+sphDetail) {
 		currentY = 0;
 		currentX = 0;
 		for (let i=0; i<oscs.length; i++) {
-			currentY += Math.sin(oscs[i].frequency.value/ctxLis.canvas.height * (x*zoom+timer))*gains[i].gain.value;
-			currentX += Math.cos(oscs[i].frequency.value/ctxLis.canvas.height * (x*zoom+timer+offLis))*gains[i].gain.value;
+			currentY += Math.sin(oscs[i].frequency.value/ctxLis.canvas.height * (x*zoom-timer)) * gains[i].gain.value;
+			currentX += Math.cos(oscs[i].frequency.value/ctxLis.canvas.height * (x*zoom-timer-offLis)) * gains[i].gain.value;
 		}
-		currentX = currentX*ampl;
-		currentY = currentY*ampl;
+		currentX *= ampl;
+		currentY *= ampl;
 		ctxLis.lineTo(ctxLis.canvas.width/2+ctxLis.canvas.width/4*currentX, ctxLis.canvas.height/2+ctxLis.canvas.height/4*currentY);
+		ctxLis.strokeStyle = `rgba(255,255,255,${1-1/sphTail*x})`;
+		ctxLis.stroke();
+		ctxLis.beginPath();
+		ctxLis.moveTo(ctxLis.canvas.width/2+ctxLis.canvas.width/4*currentX, ctxLis.canvas.height/2+ctxLis.canvas.height/4*currentY);
 	}
 
-	ctxLis.stroke();
 	ctxLis.beginPath();
 	currentY = 0;
 	currentX = 0;
@@ -87,9 +90,9 @@ function drawOsc() {
 	for (let x=0; x<=ctxOsc.canvas.width; x++) {
 		currentY = 0;
 		for (let i=0; i<oscs.length; i++) {
-			currentY += (Math.sin(oscs[i].frequency.value/ctxOsc.canvas.width * (x*zoom+timer)) * gains[i].gain.value);
+			currentY += (Math.sin(oscs[i].frequency.value/ctxOsc.canvas.height * (x*zoom-timer)) * gains[i].gain.value);
 		}
-		currentY = currentY*ampl;
+		currentY *= ampl;
 		ctxOsc.lineTo(x, ctxOsc.canvas.height/2 + ctxOsc.canvas.height/4 * (currentY));
 	}
 	ctxOsc.stroke();
@@ -110,3 +113,6 @@ function playTones() {
 	osc_on? oscs.map(osc => osc.disconnect()) : oscs.map((osc,i) => osc.connect(gains[i]).connect(ctx.destination));
 	osc_on = !osc_on;
 }
+
+addOsc();
+oscs[1].frequency.value=30;
