@@ -38,6 +38,7 @@ button {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 #inputHz {
@@ -99,6 +100,12 @@ button {
 	height: 1em;
 	width: 1em;
 	overflow: hidden;
+}
+.osc_inputAdd:nth-child(3) {
+	font-size: 2em;
+	vertical-align: middle;
+	height: 1.5em;
+	width: 1.5em;
 }
 
 #rightRangers {
@@ -204,7 +211,6 @@ input[type=range]:focus::-ms-fill-upper {
 
 	#visualContainer {
 		width: 100%;
-		flex-direction: column-reverse;
 	}
 
 	#lissajous, #oscillo {
@@ -213,6 +219,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 	#inputHz {
 		width: 100%;
+		padding-left: 1em;
 	}
 
 	.oscInputs {

@@ -1,6 +1,6 @@
 let ctxLis = document.querySelector('#lissajous').getContext('2d');
 let ctxOsc = document.querySelector('#oscillo').getContext('2d');
-let currentY = 0; let currentX = 0;
+let currentY = 0, currentX = 0, previousY = 0;
 let timer = 0;
 let zoom = 0.3;
 let ampl = 0.5;
@@ -34,26 +34,23 @@ function addOsc() {
 	document.querySelector('#inputHz').innerHTML = '';
 	for (let i=0; i<oscs.length; i++) {
 		document.querySelector('#inputHz').innerHTML +=
-		`<div class="oscInputs" id="osc_${i}">
+		`<div class="oscInputs">
 			<input value="${oscs[i].frequency.value}" class="oscHz" type="range" step="0.01" min="0.01" max="1000" oninput="oscs[${i}].frequency.value=eval(this.value); this.nextSibling.nextSibling.firstChild.value=this.value">
 			[<form onsubmit="this.parentNode.querySelector('input').value=eval(this.firstChild.value); oscs[${i}].frequency.value=eval(this.firstChild.value); return false;"><input value="${oscs[i].frequency.value}" type="text" size="5"></form>]
 			<input value="${gains[i].gain.value}" class="oscVol" type="range" step="0.01" min="0" max="2" oninput="gains[${i}].gain.value=Number(this.value);">
-			<button onclick="delOsc(${i})">X</button>
 		</div>`;
 	}
 
 	playTones(); playTones();
 } addOsc()
 
-document.querySelector('.oscHz').value = 55;
-document.querySelector('#osc_0 form input').value = 55;
-
-function delOsc(id) {
+function delOsc() {
+	let id=oscs.length-1;
 	gains[id].disconnect();
 	oscs[id].disconnect();
 	oscs.splice(id, 1);
 	gains.splice(id, 1);
-	document.querySelector(`#osc_${id}`).remove();
+	document.querySelectorAll('.oscInputs')[id].remove();
 }
 
 ctxLis.lineWidth = 1; ctxOsc.lineWidth = 1;
@@ -62,7 +59,6 @@ ctxLis.fillStyle = '#000'; ctxOsc.fillStyle = '#000';
 
 function drawLis() {
 	ctxLis.fillRect(0, 0, ctxLis.canvas.width, ctxLis.canvas.height);
-
 	for (let x=0; x<=sphTail; x=x+sphDetail) {
 		currentY = 0;
 		currentX = 0;
@@ -73,12 +69,12 @@ function drawLis() {
 		currentX *= ampl;
 		currentY *= ampl;
 		ctxLis.lineTo(ctxLis.canvas.width/2+ctxLis.canvas.width/4*currentX, ctxLis.canvas.height/2+ctxLis.canvas.height/4*currentY);
-		ctxLis.strokeStyle = `rgba(255,255,255,${1-1/sphTail*x})`;
+		//ctxLis.strokeStyle = `hsla(${200+216*(1-Math.abs(0.5-1/sphTail*x)*2)},100%,50%,${1-Math.abs(0.5-1/sphTail*x)*2})`;
+		ctxLis.strokeStyle = `rgba(255,255,255,${1-Math.abs(0.5-1/sphTail*x)*2})`;
 		ctxLis.stroke();
 		ctxLis.beginPath();
 		ctxLis.moveTo(ctxLis.canvas.width/2+ctxLis.canvas.width/4*currentX, ctxLis.canvas.height/2+ctxLis.canvas.height/4*currentY);
 	}
-
 	ctxLis.beginPath();
 	currentY = 0;
 	currentX = 0;
@@ -86,8 +82,8 @@ function drawLis() {
 
 function drawOsc() {
 	ctxOsc.fillRect(0, 0, ctxOsc.canvas.width, ctxOsc.canvas.height);
-
 	for (let x=0; x<=ctxOsc.canvas.width; x++) {
+		previousY = currentY;
 		currentY = 0;
 		for (let i=0; i<oscs.length; i++) {
 			currentY += (Math.sin(oscs[i].frequency.value/ctxOsc.canvas.height * (x*zoom-timer)) * gains[i].gain.value);
@@ -113,6 +109,3 @@ function playTones() {
 	osc_on? oscs.map(osc => osc.disconnect()) : oscs.map((osc,i) => osc.connect(gains[i]).connect(ctx.destination));
 	osc_on = !osc_on;
 }
-
-addOsc();
-oscs[1].frequency.value=30;
