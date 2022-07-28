@@ -422,7 +422,7 @@ const chords = {
 		document.querySelectorAll('#chordswrap > div').forEach((prime, pid) => {
 			if (scale >> (pid+12-root)%12 & 1) {
 				prime.style.display = 'flex';
-				prime.style.order = ((pid*7)%12+12-root)%12;
+				prime.style.order = (pid*7+12-(root*7)%12)%12;
 				prime.querySelectorAll('.chordwrap > div').forEach((chord, cid) => {
 					chord.style.display =
 						((chords.chords[cid][0]>>12|chords.chords[cid][0]&4095
