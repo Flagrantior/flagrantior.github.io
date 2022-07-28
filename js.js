@@ -82,7 +82,7 @@ const toggleconso = (newmode=null) => {
 	const button = document.querySelector('#panelconso');
 	consomode = newmode ?? !consomode;
 	if (consomode) {
-		button.style.background=colors.panel_fg;
+		button.style.background=`linear-gradient(90deg, ${[colors.conso, colors.diss]}`;
 		button.style.color=colors.panel_bg;
 	} else {
 		button.style.background=colors.panel_bg;
@@ -298,7 +298,7 @@ const panel = {
 						${[...Array(12).keys()].map(n => {
 							let angle = Math.PI/12*2*(n-3);
 							return `<g>
-								<circle onclick="panel.reroot(${(n*7)%12})" cx="${
+								<circle onclick="consomode? toggle(${(n*7)%12}) : panel.reroot(${(n*7)%12})" cx="${
 									35*Math.cos(angle)+50}" cy="${
 									35*Math.sin(angle)+50}" r="8"></circle>
 								<text text-anchor="middle" dominant-baseline="middle" x="${
@@ -332,7 +332,7 @@ const panel = {
 						</div>
 						<div class="wrap">
 							<div onclick="palette()">THEME</div>
-							<div id="panelconso" onclick="toggleconso()">CONSO</div>
+							<div id="panelconso" onclick="toggleconso(); consomode && toggle(root)">CONSO</div>
 						</div>
 					</div>
 				</div>`
