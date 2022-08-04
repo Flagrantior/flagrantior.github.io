@@ -12,7 +12,7 @@ const precolors = [
 	main_bg:"#000000", conso:"#ff0000", diss:"#0000ff",
 	stringed_notes_fg:"#000000", stringed_notes_bg:"#ffffff", stringed_notes_bd:"#000000",
 	stringed_strings:"#ffffff", stringed_frets:"#ffffff",
-	keyed_on_bg:"#ffffff", keyed_off_bg:"#111111", keyed_bd:"#000000",
+	keyed_on_bg:"#ffffff", keyed_off_bg:"#2b2b2b", keyed_bd:"#000000",
 	panel_fg:"#ffffff", panel_bg:"#000000", panel_on_fg:"#000000", panel_on_bg:"#ffffff",
 	panel_off_fg:"#ffffff", panel_off_bg:"#000000", chords_fg:"#ffffff",
 	},{
