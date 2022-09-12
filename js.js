@@ -120,7 +120,6 @@ const renders = () => {
 
 const palette = (redraw=false) => {
 	if (redraw) document.querySelector('#palette').remove();
-	if (redraw) console.log(1);
 	if (document.querySelector('#palette') === null) {
 		document.querySelector('body').innerHTML += `<div id="palette"><div id="precolors">${
 			precolors.map((preset, pid) =>
@@ -232,7 +231,7 @@ const stringed = {
 					case '#': {shift=(shift+13)%12; i++; stringed.strings--; break}
 					case 'b': {shift=(shift+11)%12; i++; stringed.strings--; break}
 					default: {stringed.zeroes[nid-i]
-						= notes[0].indexOf(note.toUpperCase())+shift; shift=0; console.log(stringed.zeroes)};
+						= notes[0].indexOf(note.toUpperCase())+shift; shift=0};
 				}
 			});
 			localStorage.setItem('stringed_strings', JSON.stringify(stringed.strings));
