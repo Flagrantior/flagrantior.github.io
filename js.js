@@ -229,10 +229,10 @@ const stringed = {
 			let shift=0; let i=0;
 			input.value.split('').reverse().forEach((note, nid) => {
 				switch (note) {
-					case '#': {shift++; i++; stringed.strings--; break}
-					case 'b': {shift--; i++; stringed.strings--; break}
+					case '#': {shift=(shift+13)%12; i++; stringed.strings--; break}
+					case 'b': {shift=(shift+11)%12; i++; stringed.strings--; break}
 					default: {stringed.zeroes[nid-i]
-						= notes[0].indexOf(note.toUpperCase())+shift; shift=0};
+						= notes[0].indexOf(note.toUpperCase())+shift; shift=0; console.log(stringed.zeroes)};
 				}
 			});
 			localStorage.setItem('stringed_strings', JSON.stringify(stringed.strings));
