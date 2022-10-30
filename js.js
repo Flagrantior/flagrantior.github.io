@@ -6,7 +6,7 @@ let root = 0; // C
 let scale = 0b101010110101;
 let alter = 2; // b/#/n
 const ratio = 2**(1/12);
-const conso = [.6, .093, .098, .185, .234, .306, .067, .452, .154, .296, .151, .078]; // 0=1! 13=0.89
+const conso = [.55, .093, .098, .185, .234, .306, .067, .452, .154, .296, .151, .078]; // 0=1! 13=0.89
 const precolors = [
 	{
 	main_bg:"#000000", conso:"#ff0000", diss:"#0000ff",
@@ -43,8 +43,8 @@ let colors = JSON.parse(localStorage.getItem('colors')) ?? precolors[0];
 
 const consocolor = (k) => {
 	return `#${[...Array(3).keys()].map(v => { return Math.round(
-		parseInt(colors.conso.slice(1+2*v,3+2*v),16)*conso[k]*1.66
-		+ parseInt(colors.diss.slice(1+2*v,3+2*v),16)*(1-conso[k]*1.66))
+		parseInt(colors.conso.slice(1+2*v,3+2*v),16)*conso[k]*1.81
+		+ parseInt(colors.diss.slice(1+2*v,3+2*v),16)*(1-conso[k]*1.81))
 		.toString(16).padStart(2,0) }).join('')}`
 }
 
