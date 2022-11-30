@@ -93,8 +93,7 @@ select {
 #keyed > #keyedwrap {
 	display: flex;
 	justify-content: center;
-	min-width: 15em;
-	max-width: 30em;
+	width: 30em;
 }
 #keyed .note:hover {
 	transition: .1s;
