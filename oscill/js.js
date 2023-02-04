@@ -1,5 +1,4 @@
 let ctxLis = document.querySelector('#lissajous').getContext('2d');
-let ctxFou = document.querySelector('#fourier').getContext('2d');
 let ctxOsc = document.querySelector('#oscillo').getContext('2d');
 let currentY = 0, currentX = 0, previousY = 0;
 let timer = 0;
@@ -12,7 +11,6 @@ let offLis = 0;
 
 function draw() {
 	drawLis();
-	drawFou();
 	drawOsc();
 	timer+=speed;
 } let timerId = setInterval(draw, 10);
@@ -82,33 +80,6 @@ function drawLis() {
 			ctxLis.canvas.height/2+ctxLis.canvas.height/4*currentY);
 	}
 	ctxLis.beginPath();
-	currentY = 0;
-	currentX = 0;
-}
-
-function drawFou() {
-	ctxFou.fillRect(0, 0, ctxFou.canvas.width, ctxFou.canvas.height);
-	for (let x=0; x<=sphTail; x+=sphDetail) {
-		currentY = 0;
-		currentX = 0;
-		for (let i=0; i<oscs.length; i++) {
-			currentY += Math.sin(oscs[i].frequency.value/ctxFou.canvas.height * (x*zoom-timer)) * gains[i].gain.value;
-			currentX += Math.cos(oscs[i].frequency.value/ctxFou.canvas.height * (x*zoom-timer-offLis)) * gains[i].gain.value;
-		}
-		currentX *= ampl;
-		currentY *= ampl;
-		ctxFou.lineTo(
-			ctxFou.canvas.height/2+ctxFou.canvas.height/4*currentX,
-			ctxFou.canvas.height/2+ctxFou.canvas.height/4*currentY);
-		//ctxLis.strokeStyle = `hsla(${200+216*(1-Math.abs(0.5-1/sphTail*x)*2)},100%,50%,${1-Math.abs(0.5-1/sphTail*x)*2})`;
-		ctxFou.strokeStyle = `rgba(255,255,255,${1-Math.abs(0.5-1/sphTail*x)*2})`;
-		ctxFou.stroke();
-		ctxFou.beginPath();
-		ctxFou.moveTo(
-			ctxFou.canvas.height/2+ctxFou.canvas.height/4*currentX,
-			ctxFou.canvas.height/2+ctxFou.canvas.height/4*currentY);
-	}
-	ctxFou.beginPath();
 	currentY = 0;
 	currentX = 0;
 }
