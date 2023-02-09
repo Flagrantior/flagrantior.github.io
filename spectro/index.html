@@ -1,129 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SPECTRO</title>
-    <meta charset="utf-8"/>
-    <meta name="description" content="Spectroscope."/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="icon" href="/media/favicon.svg"/>
-    <link rel="icon" type="image/x-icon" href="/media/favicon.ico"/>
-    <link rel="icon" type="image/svg+xml" href="/media/favicon.svg"/>
-    <link rel="apple-touch-icon" href="/media/favicon.png"/>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152738341-1"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-152738341-1');</script>
-    <script data-ad-client="ca-pub-5962417488513523" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<meta charset="UTF-8">
+	<title>F TUNER</title>
+	<link rel="stylesheet" type="text/css" href="css/layout.css">
 </head>
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
-html {
-	display: flex;
+html, body, canvas {
+	margin: 0;
+	padding: 0;
+	border: none;
 	height: 100%;
 	width: 100%;
-	padding: 0;
-	margin: 0;
-	border: 0;
+	background: #000;
 }
 
 body {
-	padding: 0;
-	margin: 0;
-	border: 0;
 	display: flex;
-	height: 100%;
-	width: 100%;
-	justify-content: center;
+	flex-direction: column;
+}
+
+#note {
+	color: #fff;
+	align-self: center;
+	font-family: monospace;
+	font-size: 5em;
+	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background: black;
-}
-
-#starter {
-	font-family: Raleway;
+	padding-top: 0.5em;
 	position: absolute;
-	font-size: 10em;
-	color: white;
-	user-select: none;
-	cursor: pointer;
+	z-index: 2;
 }
 
-canvas {
-	width: 100%;
-	height: 100%;
+#note > div {
+	display: flex;
+	flex: 1;
+	align-items: center;
 }
-/*
-@media(orientation: portrait) {
-	canvas {
-		transform: rotate(90deg);
-	}
+
+#note_name {
+	text-align: center;
+	align-self: center;
+	width: 2em;
 }
-*/
+
+#l_offset {
+	width: 10em;
+	text-align: right;
+	font-size: .7em;
+}
+
+#r_offset {
+	width: 10em;
+	text-align: left;
+	font-size: .7em;
+}
+
+#note_freq {
+	flex: 1;
+	font-size: 0.5em;
+	text-align: center;
+	padding-top: .1em;
+}
+
 </style>
-</head>
 <body>
-	<div id="starter">START</div>
-	<canvas width='2048' height='720' id='surface'></canvas>
-<script>
-	document.querySelector('canvas').setAtt
-processStream = function(stream) {
-	window.microphone = context.createMediaStreamSource(stream);
-	let analyser = context.createAnalyser();
-	let buffer = new Uint8Array(1024), paused=false;
-	let canvas = document.getElementById('surface'), ctx=canvas.getContext('2d');
-	ctx.canvas.width  = window.innerWidth;
-	ctx.canvas.height = window.innerHeight;
-	window.addEventListener("resize", () => {
-		ctx.canvas.width = window.innerWidth; ctx.canvas.height = window.innerHeight;
-	});
-	convertToMono(microphone).connect(analyser);
-	function process() {
-		window.requestAnimationFrame(process);
-		if (paused) return;
-		analyser.getByteFrequencyData(buffer);
-		ctx.drawImage(canvas,-2,0);
-		for (let i=window.innerHeight; i--;) {
-			let c = buffer[Math.floor(1024/window.innerHeight*i)];
-			ctx.fillStyle = 'hsl('+(c/1.3+250)+',100%,'+c/2.55+'%)';
-			ctx.fillRect(window.innerWidth-50, window.innerHeight-i, 50, 1)
-		}
-	}
-	process();
-	document.onkeydown = function(e) {
-		if (e.keyCode == 32) {paused=!paused}
-	}
+	<div id="note">
+		<div>
+			<div id="l_offset"></div>
+			<div id="note_name"></div>
+			<div id="r_offset"></div>
+		</div>
+		<div id="note_freq"></div>
+	</div>
+	<canvas id="tune" width="2048" height="255" style="width:100%; height:40%"></canvas>
+	<canvas id="flow" width="2048" height="150" style="width:100%; height:60%"></canvas>
+	
+</body>
+<script type="text/javascript">
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const analyser = audioCtx.createAnalyser();
+analyser.fftSize = 4096;
+navigator.mediaDevices.getUserMedia({ audio:true, video:false })
+    .then(stream => {
+        const source = audioCtx.createMediaStreamSource(stream);
+        source.connect(analyser);
+        loop();
+    })
+    .catch(err => console.log('Error: ' + err));
+
+const notediv = {
+	name:     document.querySelector('#note_name'),
+	l_offset: document.querySelector('#l_offset'),
+	r_offset: document.querySelector('#r_offset'),
+	freq:     document.querySelector('#note_freq'),
 }
+const ctx =      document.querySelector('#tune').getContext('2d');
+const ctx_flow = document.querySelector('#flow').getContext('2d');
+ctx.lineWidth = 1;
+ctx.fillStyle = '#000';
+ctx.strokeStyle = '#fff';
 
-try {
-	var context = new (window.AudioContext || window.webkitAudioContext)();
-	let err = function() {console.log('Error')}
-	if (navigator.webkitGetUserMedia)
-		navigator.webkitGetUserMedia({audio: true}, processStream, err);
-	else
-		navigator.mediaDevices.getUserMedia({audio: true}).then(processStream).catch(err);
-} catch(e) {document.write("Your browser does not support this.")}
+const ratio = 2**(1/12);
+const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const base_freqes = [16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87]
 
-function convertToMono(input) {
-	let splitter = context.createChannelSplitter(2);
-	let merger = context.createChannelMerger(2);
-	input.connect(splitter);
-	splitter.connect(merger, 0, 0);
-	splitter.connect(merger, 0, 1);
-	return merger
-}
+let ampl_max = 0;
+let freq_max = 0;
+let near_note_freq = '';
+let base_freq = 0;
+let near_octave = 0;
+let freq_offset = '';
+ctx.font = '30px monospace';
 
-window.onload = function() {
-	if (context.state != 'running') {
-		document.querySelector('#starter').style.display = 'flex';
-		document.querySelector('#starter').addEventListener('click', function() {
-			context.resume().then(() => {document.querySelector('#starter').remove()});
-		})
+const loop = () => {
+	requestAnimationFrame(loop);
+
+    const buffer = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(buffer);
+
+	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	ctx.beginPath();
+	ctx.moveTo(0, 500);
+	
+	buffer.forEach((ampl,freq) => {
+		if (ampl>ampl_max) {ampl_max=ampl; freq_max=freq}
+		ctx.fillStyle = 'hsl('+(ampl/1.3+250)+',100%,'+ampl/2.55+'%)';
+		ctx.fillRect(freq, 255, 1, -ampl)
+	})
+
+	near_octave = 0;
+	base_freq = freq_max*5.8479532;
+
+	ctx.stroke();
+
+	while (base_freq>31) {base_freq/=2; near_octave++};
+	near_note_freq = base_freqes.reduce((prev, curr) =>
+		(Math.abs(curr - base_freq) < Math.abs(prev - base_freq) ? curr : prev));
+	
+	ctx.fillStyle = '#000';
+
+	notediv.name.innerText = notes[base_freqes.indexOf(near_note_freq)]+near_octave;
+	notediv.freq.innerText = base_freq.toFixed(2);
+	if (base_freq>near_note_freq) {
+		notediv.r_offset.innerText =
+			'<'.repeat(Math.floor((base_freq-near_note_freq)/(near_note_freq*  ratio-near_note_freq)*5)%6);
+		notediv.l_offset.innerText = '';
 	} else {
-		document.querySelector('#starter').style.display = 'none'
+		notediv.l_offset.innerText =
+			'>'.repeat(Math.floor((base_freq-near_note_freq)/(near_note_freq*1/ratio-near_note_freq)*5)%6);
+		notediv.r_offset.innerText = '';
 	}
+
+	ctx_flow.drawImage(ctx_flow.canvas, 0, 1);
+	for (let i=2048; i--;) {
+		let c = buffer[i];
+		//let c = buffer[Math.floor(2048/window.innerWidth*i)];
+		//ctx_flow.fillStyle = 'hsl(0,0%,'+c/2.55+'%)';
+		ctx_flow.fillStyle = 'hsl('+(c/1.3+250)+',100%,'+c/2.55+'%)';
+		ctx_flow.fillRect(i, 0, 1, 1)
+	}
+
+	ampl_max = 0;
+	freq_max = 0;
+
+	//setTimeout(loop, 10);
 }
 
 </script>
-
-
-</body>
 </html>

@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro|Raleway|Abel|Roboto&display=swap');
+
+html {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	background: #000;
+	color: #fff;
+	display: flex;
+	flex: 1 0 auto;
+	overflow: auto;
+	flex-direction: column;
+	align-items: center;
+	font-family: Abel;
+	user-select: none;
+}
+
+button {
+	background: #000;
+	color: #fff;
+	border: none;
+	font-size: 1em;
+	cursor: pointer;
+}
+
+#visualContainer {
+	width: 90vw;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+#inputHz {
+	width: 70%;
+	min-width: 90vmin;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+}
+
+#lissajous {
+	width: 40%;
+	max-width: 400px;
+}
+
+#oscillo {
+	width: 60%;
+	max-width: 700px;
+}
+
+#inputOscillo {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.oscInputs {
+	font-size: 2em;
+	padding-right: 30px;
+	display: flex;
+	align-items: center;
+}
+
+.oscHz {
+	width: 100%;
+}
+
+.oscVol {
+	width: 10vw;
+}
+
+.oscInputs > form > input {
+	font-size: 0.7em;
+}
+
+#inputOscillo form input {
+	background: #000;
+	color: #fff;
+	border: none;
+}
+
+.osc_inputAdd {
+	cursor: pointer;
+	font-family: Raleway;
+	font-size: 3.5em;
+	text-align: center;
+	margin-right: 30px;
+	height: 1em;
+	width: 1em;
+	overflow: hidden;
+}
+.osc_inputAdd:nth-child(3) {
+	font-size: 2em;
+	vertical-align: middle;
+	height: 1.5em;
+	width: 1.5em;
+}
+
+#rightRangers {
+	color: #999;
+	text-align: right;
+}
+
+#r_min, #r_max {
+	background: #000;
+	border: none;
+	color: #fff;
+}
+
+/*input nuller*/
+
+input[type=range] {
+  -webkit-appearance: none;
+  /*margin: 10px 0;*/
+  background: rgba(0,0,0,0);
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 10px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #111;
+  border: 0px solid #000000;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 1px 4px rgba(0,0,0,0);
+  border: 0px solid #000000;
+  height: 15px;
+  width: 8px;
+  border-radius: 0;
+  background: #FFFFFF;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -6.5px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #F2F2F2;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #111;
+  border: 0px solid #000000;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 1px 4px rgba(0,0,0,0);
+  border: 0px solid #000000;
+  height: 15px;
+  width: 8px;
+  border-radius: 0;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #F2F2F2;
+  border: 0px solid #000000;
+  border-radius: 100px;
+  box-shadow: 0px 0px 0px #000000;
+}
+input[type=range]::-ms-fill-upper {
+  background: #F2F2F2;
+  border: 0px solid #000000;
+  border-radius: 100px;
+  box-shadow: 0px 0px 0px #000000;
+}
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 0px 0px 1px 4px rgba(0,0,0, 0.5);
+  border: 0px solid #000000;
+  height: 18px;
+  width: 18px;
+  border-radius: 18px;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #F2F2F2;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #F2F2F2;
+}
+
+@media(orientation: portrait) {
+
+	#visualContainer {
+		width: 100%;
+	}
+
+	#lissajous, #oscillo {
+		width: 100%;
+	}
+
+	#inputHz {
+		width: 100%;
+		padding-left: 1em;
+	}
+
+	.oscInputs {
+		padding-right: 0.5em;
+	}
+
+}
+

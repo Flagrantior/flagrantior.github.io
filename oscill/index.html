@@ -1,174 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>F TUNER</title>
-	<link rel="stylesheet" type="text/css" href="css/layout.css">
+    <title>OSCILL</title>
+    <meta charset="utf-8"/>
+    <meta name="description" content="Oscillograph."/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="css.css" rel="stylesheet"/>
+    <link rel="icon" href="/media/favicon.svg"/>
+    <link rel="icon" type="image/x-icon" href="/media/favicon.ico"/>
+    <link rel="icon" type="image/svg+xml" href="/media/favicon.svg"/>
+    <link rel="apple-touch-icon" href="/media/favicon.png"/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152738341-1"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-152738341-1');</script>
+    <script data-ad-client="ca-pub-5962417488513523" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
-<style>
-
-html, body, canvas {
-	margin: 0;
-	padding: 0;
-	border: none;
-	height: 100%;
-	width: 100%;
-	background: #000;
-}
-
-body {
-	display: flex;
-	flex-direction: column;
-}
-
-#note {
-	color: #fff;
-	align-self: center;
-	font-family: monospace;
-	font-size: 5em;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 0.5em;
-	position: absolute;
-	z-index: 2;
-}
-
-#note > div {
-	display: flex;
-	flex: 1;
-	align-items: center;
-}
-
-#note_name {
-	text-align: center;
-	align-self: center;
-	width: 2em;
-}
-
-#l_offset {
-	width: 10em;
-	text-align: right;
-	font-size: .7em;
-}
-
-#r_offset {
-	width: 10em;
-	text-align: left;
-	font-size: .7em;
-}
-
-#note_freq {
-	flex: 1;
-	font-size: 0.5em;
-	text-align: center;
-	padding-top: .1em;
-}
-
-</style>
 <body>
-	<div id="note">
-		<div>
-			<div id="l_offset"></div>
-			<div id="note_name"></div>
-			<div id="r_offset"></div>
-		</div>
-		<div id="note_freq"></div>
+	<div id="visualContainer">
+		<canvas id="lissajous" width="400" height="400"></canvas>
+		<!--<canvas id="fourier" width="400" height="400"></canvas>-->
+		<canvas id="oscillo" width="700" height="400"></canvas>
 	</div>
-	<canvas id="tune" width="2048" height="255" style="width:100%; height:40%"></canvas>
-	<canvas id="flow" width="2048" height="150" style="width:100%; height:60%"></canvas>
-	
+	<div id="inputOscillo">
+		<div id="inputHz"></div>
+		<div style="display: flex;">
+			<div style="display: flex; align-items: center; flex-direction: column;">
+				<button class="osc_inputAdd" onclick="addOsc()">+</button>
+				<button class="osc_inputAdd" onclick="delOsc()">-</button>
+				<button class="osc_inputAdd" onclick="playTones(); this.innerText = osc_on? '■' : '▶'">▶</button>
+			</div>
+	        <table id="rightRangers">
+				<tr>
+	                <td>ZY ZOOM:</td>
+	                <td><input id="rr_ampl" type="range" step="0.0005" min="0" max="1" oninput="ampl=Number(this.value)"></td>
+	            </tr>
+	            <tr>
+	                <td>X ZOOM:</td>
+	                <td><input id="rr_zoom" type="range" step="0.000001" min="0.000001" max="1" oninput="zoom=Number(1-this.value)"></td>
+	            </tr>
+	            <tr>
+	                <td>SPEED:</td>
+	                <td><input id="rr_speed" type="range" step="0.001" min="0" max="50" oninput="speed=Number(this.value)"></td>
+	            </tr>
+	            <tr>
+					<td>DETAIL:</td>
+					<td><input id="rr_detail" type="range" step="0.1" min="0.01" max="3" oninput="sphDetail=Number(3-this.value)"></td>
+				</tr>
+				<tr>
+					<td>DEPTH:</td>
+					<td><input id="rr_tail" type="range" step="1" min="0" max="5000" oninput="sphTail=Number(this.value)"></td>
+				</tr>
+				<tr>
+					<td>LISS:</td>
+					<td><input id="rr_offLis" type="range" step="0.01" min="0" max="20" oninput="offLis=Number(this.value)"></td>
+				</tr>
+	        </table>
+		</div>
+	</div>
+	<script src="js.js"></script>
 </body>
-<script type="text/javascript">
-
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const analyser = audioCtx.createAnalyser();
-analyser.fftSize = 4096;
-navigator.mediaDevices.getUserMedia({ audio:true, video:false })
-    .then(stream => {
-        const source = audioCtx.createMediaStreamSource(stream);
-        source.connect(analyser);
-        loop();
-    })
-    .catch(err => console.log('Error: ' + err));
-
-const notediv = {
-	name:     document.querySelector('#note_name'),
-	l_offset: document.querySelector('#l_offset'),
-	r_offset: document.querySelector('#r_offset'),
-	freq:     document.querySelector('#note_freq'),
-}
-const ctx =      document.querySelector('#tune').getContext('2d');
-const ctx_flow = document.querySelector('#flow').getContext('2d');
-ctx.lineWidth = 1;
-ctx.fillStyle = '#000';
-ctx.strokeStyle = '#fff';
-
-const ratio = 2**(1/12);
-const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-const base_freqes = [16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87]
-
-let ampl_max = 0;
-let freq_max = 0;
-let near_note_freq = '';
-let base_freq = 0;
-let near_octave = 0;
-let freq_offset = '';
-ctx.font = '30px monospace';
-
-const loop = () => {
-	requestAnimationFrame(loop);
-
-    const buffer = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(buffer);
-
-	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	ctx.beginPath();
-	ctx.moveTo(0, 500);
-	
-	buffer.forEach((ampl,freq) => {
-		if (ampl>ampl_max) {ampl_max=ampl; freq_max=freq}
-		ctx.fillStyle = 'hsl('+(ampl/1.3+250)+',100%,'+ampl/2.55+'%)';
-		ctx.fillRect(freq, 255, 1, -ampl)
-	})
-
-	near_octave = 0;
-	base_freq = freq_max*5.8479532;
-
-	ctx.stroke();
-
-	while (base_freq>31) {base_freq/=2; near_octave++};
-	near_note_freq = base_freqes.reduce((prev, curr) =>
-		(Math.abs(curr - base_freq) < Math.abs(prev - base_freq) ? curr : prev));
-	
-	ctx.fillStyle = '#000';
-
-	notediv.name.innerText = notes[base_freqes.indexOf(near_note_freq)]+near_octave;
-	notediv.freq.innerText = base_freq.toFixed(2);
-	if (base_freq>near_note_freq) {
-		notediv.r_offset.innerText =
-			'<'.repeat(Math.floor((base_freq-near_note_freq)/(near_note_freq*  ratio-near_note_freq)*5)%6);
-		notediv.l_offset.innerText = '';
-	} else {
-		notediv.l_offset.innerText =
-			'>'.repeat(Math.floor((base_freq-near_note_freq)/(near_note_freq*1/ratio-near_note_freq)*5)%6);
-		notediv.r_offset.innerText = '';
-	}
-
-	ctx_flow.drawImage(ctx_flow.canvas, 0, 1);
-	for (let i=2048; i--;) {
-		let c = buffer[i];
-		//let c = buffer[Math.floor(2048/window.innerWidth*i)];
-		//ctx_flow.fillStyle = 'hsl(0,0%,'+c/2.55+'%)';
-		ctx_flow.fillStyle = 'hsl('+(c/1.3+250)+',100%,'+c/2.55+'%)';
-		ctx_flow.fillRect(i, 0, 1, 1)
-	}
-
-	ampl_max = 0;
-	freq_max = 0;
-
-	//setTimeout(loop, 10);
-}
-
-</script>
 </html>
