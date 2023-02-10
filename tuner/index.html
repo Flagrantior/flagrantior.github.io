@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>F TUNER</title>
+	<link rel="stylesheet" type="text/css" href="css/layout.css">
+</head>
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Abel&display=swap');
+
+html, body, canvas {
+	margin: 0;
+	padding: 0;
+	border: none;
+	height: 100%;
+	width: 100%;
+	background: #000;
+}
+
+/*input nuller*/
+input[type=range] {
+  -webkit-appearance: none;
+  background: rgba(0,0,0,0);
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: .9em;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #111;
+  border: 0px solid #000000;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 1px 4px rgba(0,0,0,0);
+  border: 0px solid #000000;
+  height: 1.5em;
+  width: 1em;
+  border-radius: 0;
+  background: #FFFFFF;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -.35em;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #F2F2F2;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #111;
+  border: 0px solid #000000;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 1px 4px rgba(0,0,0,0);
+  border: 0px solid #000000;
+  height: 15px;
+  width: 8px;
+  border-radius: 0;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #F2F2F2;
+  border: 0px solid #000000;
+  border-radius: 100px;
+  box-shadow: 0px 0px 0px #000000;
+}
+input[type=range]::-ms-fill-upper {
+  background: #F2F2F2;
+  border: 0px solid #000000;
+  border-radius: 100px;
+  box-shadow: 0px 0px 0px #000000;
+}
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 0px 0px 1px 4px rgba(0,0,0, 0.5);
+  border: 0px solid #000000;
+  height: 18px;
+  width: 18px;
+  border-radius: 18px;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #F2F2F2;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #F2F2F2;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+#note {
+	user-select: none;
+	color: #fff;
+	align-self: center;
+	font-family: monospace;
+	font-family: Abel;
+	font-size: 5em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 0.5em;
+	position: absolute;
+	z-index: 2;
+}
+
+#note > div {
+	display: flex;
+	flex: 1;
+	align-items: center;
+}
+
+#note_name {
+	display: flex;
+	text-align: center;
+	align-self: center;
+	justify-content: flex-start;
+	width: 2em;
+}
+
+#note_name_octave {
+	font-size: 0.6em;
+	margin-left: 0.2em;
+}
+
+#l_offset {
+	width: 10em;
+	text-align: right;
+	font-size: .6em;
+}
+
+#r_offset {
+	width: 10em;
+	text-align: left;
+	font-size: .6em;
+}
+
+#note_freq {
+	flex: 1;
+	font-size: 0.5em;
+	text-align: center;
+	padding-top: .1em;
+}
+
+#controls {
+	color: #fff;
+	align-self: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	bottom: 0;
+	background: rgba(0,0,0, 0.5);
+	padding: 1em;
+}
+
+#controls input {
+	margin-top: .8em;
+	width: 20em;
+}
+
+</style>
+<body>
+	<div id="note">
+		<div>
+			<div id="l_offset"></div>
+			<div id="note_name">
+				<div id="note_name_octave"></div>
+				<div id="note_name_letter"></div>
+			</div>
+			<div id="r_offset"></div>
+		</div>
+		<div id="note_freq"></div>
+	</div>
+	<canvas id="tune" width="2048" height="265"></canvas>
+	<canvas id="flow" width="2048" height="512"></canvas>
+	<div id="controls">
+		<div>
+		ACUR: <input value="9"   type="range" min="0" max="10"    step="1"    oninput="newfftacc(this.value)">
+		</div>
+		<div>
+		ZOOM: <input value="0.8" type="range" min="0" max="0.999" step="0.01" oninput="zoom=1-this.value">
+		</div>
+		<div>
+		FLOW: <input value="1"   type="range" min="1" max="10"    step="1"    oninput="speed=this.value">
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const analyser = audioCtx.createAnalyser();
+let fftacc = 1;
+const newfftacc = (v) => {
+	v %= 11;
+	fftacc = v;
+	analyser.fftSize = 32*2**v;
+}
+newfftacc(9);
+let zoom = 0.2;
+let speed = 1;
+
+navigator.mediaDevices.getUserMedia({ audio:true, video:false })
+    .then(stream => {
+        const source = audioCtx.createMediaStreamSource(stream);
+        source.connect(analyser);
+        loop();
+    })
+    .catch(err => console.log('Error: ' + err));
+
+const notediv = {
+	name:     document.querySelector('#note_name_letter'),
+	octave:   document.querySelector('#note_name_octave'),
+	l_offset: document.querySelector('#l_offset'),
+	r_offset: document.querySelector('#r_offset'),
+	freq:     document.querySelector('#note_freq'),
+}
+const ctx =      document.querySelector('#tune').getContext('2d');
+const ctx_flow = document.querySelector('#flow').getContext('2d');
+ctx.lineWidth = 1;
+ctx.fillStyle = '#000';
+ctx.strokeStyle = '#fff';
+
+const ratio = 2**(1/12);
+const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const base_freqes = [16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87]
+
+let ampl_max = 0;
+let freq_max = 0;
+let near_note_freq = '';
+let base_freq = 0;
+let near_octave = 0;
+let freq_offset = '';
+ctx.font = '30px monospace';
+
+const loop = () => {
+	requestAnimationFrame(loop);
+
+	const buffer = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(buffer);
+	ctx.fillStyle = '#000';
+	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+	buffer.forEach((ampl, freq) => {
+		if (ampl>ampl_max) {ampl_max=ampl; freq_max=freq}
+	});
+
+	for (let freq=0; freq<analyser.frequencyBinCount*zoom; freq++) {
+		ctx.fillStyle = 'hsl('+(buffer[freq]/1.3+250)+',100%,'+buffer[freq]/2.55+'%)'; ctx_flow.fillStyle = ctx.fillStyle;
+		ctx.fillRect(Math.floor(freq*(2048/analyser.frequencyBinCount)*(1/zoom)), 265, Math.ceil(2048/analyser.frequencyBinCount*(1/zoom)), -buffer[freq]);
+		ctx_flow.fillRect(Math.floor(freq*(2048/analyser.frequencyBinCount)*(1/zoom)), 0, Math.ceil(2048/analyser.frequencyBinCount*(1/zoom)), speed);
+	}
+
+	freq_max *= 1.4647722279*2**(10-fftacc);
+	base_freq = freq_max;
+
+	while (base_freq>31) {base_freq/=2; near_octave++};
+	near_note_freq = base_freqes.reduce((prev, curr) =>
+		(Math.abs(curr - base_freq) < Math.abs(prev - base_freq) ? curr : prev));
+
+	notediv.name.innerText = notes[base_freqes.indexOf(near_note_freq)];
+	notediv.octave.innerText = near_octave;
+	notediv.freq.innerText = freq_max.toFixed(2);
+	if (base_freq>near_note_freq) {
+		notediv.r_offset.innerText =
+			'<'.repeat(Math.floor((base_freq-near_note_freq)/(near_note_freq*  ratio-near_note_freq)*5)%6);
+		notediv.l_offset.innerText = '';
+	} else {
+		notediv.l_offset.innerText =
+			'>'.repeat(Math.floor((base_freq-near_note_freq)/(near_note_freq*1/ratio-near_note_freq)*5)%6);
+		notediv.r_offset.innerText = '';
+	}
+
+	ctx_flow.drawImage(ctx_flow.canvas, 0, speed);
+
+	near_octave = 0;
+	ampl_max = 0;
+	freq_max = 0;
+}
+
+</script>
+</html>

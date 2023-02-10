@@ -467,7 +467,7 @@ const linked = () => {
 		document.write(`<div id="linked">
 			<b><a href="/hint/DARKHINT_H.png">HINT</a></b>
 			<a href="/oscill">OSCILL</a>
-			<a href="/spectro">SPECTRO</a>
+			<a href="/tuner">TUNER</a>
 			<a href="mailto:flagrantior@gmail.com">EMAIL</a>
 			<a href="https://t.me/flagrantior">TELEGRAM</a>
 			<div>Valentin Gaan</div>
