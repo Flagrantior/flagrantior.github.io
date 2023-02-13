@@ -21,7 +21,6 @@ html, body, canvas {
 	background: #000;
 }
 
-/*input nuller*/
 input[type=range] {
   -webkit-appearance: none;
   background: rgba(0,0,0,0);
@@ -31,6 +30,7 @@ input[type=range]:focus {
 }
 input[type=range]::-webkit-slider-runnable-track {
   height: .9em;
+  margin-bottom: .3em;
   cursor: pointer;
   animate: 0.2s;
   box-shadow: 0px 0px 0px #000000;
@@ -78,12 +78,7 @@ input[type=range]::-ms-track {
   border-color: transparent;
   color: transparent;
 }
-input[type=range]::-ms-fill-lower {
-  background: #F2F2F2;
-  border: 0px solid #000000;
-  border-radius: 100px;
-  box-shadow: 0px 0px 0px #000000;
-}
+input[type=range]::-ms-fill-lower,
 input[type=range]::-ms-fill-upper {
   background: #F2F2F2;
   border: 0px solid #000000;
@@ -100,9 +95,7 @@ input[type=range]::-ms-thumb {
   background: #FFFFFF;
   cursor: pointer;
 }
-input[type=range]:focus::-ms-fill-lower {
-  background: #F2F2F2;
-}
+input[type=range]:focus::-ms-fill-lower,
 input[type=range]:focus::-ms-fill-upper {
   background: #F2F2F2;
 }
@@ -125,12 +118,15 @@ body {
 	padding-top: 0.5em;
 	position: absolute;
 	z-index: 2;
+	background: linear-gradient(90deg, rgba(0,0,0,0) calc(50% - 3em), rgba(0,0,0,.5), rgba(0,0,0,0) calc(50% + 3em));
 }
 
 #note > div {
 	display: flex;
 	flex: 1;
 	align-items: center;
+	width: 100vw;
+	justify-content: center;
 }
 
 #note_name {
@@ -159,10 +155,10 @@ body {
 }
 
 #note_freq {
-	flex: 1;
 	font-size: 0.5em;
 	text-align: center;
 	padding-top: .1em;
+	align-self: center;
 }
 
 #controls {
@@ -180,6 +176,12 @@ body {
 #controls input {
 	margin-top: .8em;
 	width: 20em;
+}
+
+@media (orientation: portrait) {
+	#controls {
+		font-size: 2em;
+	}
 }
 
 </style>
@@ -202,7 +204,7 @@ body {
 		ACUR: <input value="9"   type="range" min="0" max="10"    step="1"    oninput="newfftacc(this.value)">
 		</div>
 		<div>
-		ZOOM: <input value="0.8" type="range" min="0" max="0.999" step="0.01" oninput="zoom=1-this.value">
+		ZOOM: <input value="0.9" type="range" min="0" max="0.999" step="0.01" oninput="zoom=1-this.value">
 		</div>
 		<div>
 		FLOW: <input value="1"   type="range" min="1" max="10"    step="1"    oninput="speed=this.value">
@@ -220,7 +222,7 @@ const newfftacc = (v) => {
 	analyser.fftSize = 32*2**v;
 }
 newfftacc(9);
-let zoom = 0.2;
+let zoom = 0.1;
 let speed = 1;
 
 navigator.mediaDevices.getUserMedia({ audio:true, video:false })
@@ -238,31 +240,36 @@ const notediv = {
 	r_offset: document.querySelector('#r_offset'),
 	freq:     document.querySelector('#note_freq'),
 }
-const ctx =      document.querySelector('#tune').getContext('2d');
-const ctx_flow = document.querySelector('#flow').getContext('2d');
-ctx.lineWidth = 1;
-ctx.fillStyle = '#000';
-ctx.strokeStyle = '#fff';
-
-const ratio = 2**(1/12);
-const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const ctx         = document.querySelector('#tune').getContext('2d');
+const ctx_flow    = document.querySelector('#flow').getContext('2d');
+const ratio       = 2**(1/12);
+const notes       = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const base_freqes = [16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87]
 
-let ampl_max = 0;
-let freq_max = 0;
-let near_note_freq = '';
-let base_freq = 0;
-let near_octave = 0;
-let freq_offset = '';
+let ampl_max=0, freq_max=0, base_freq=0, near_octave=0, grid_kHz=1;
+let near_note_freq='', freq_offset='';
 ctx.font = '30px monospace';
+
+var grd = ctx.createLinearGradient(0, 0, 0, 200);
+grd.addColorStop(0, "#666");
+grd.addColorStop(1, "#000");
 
 const loop = () => {
 	requestAnimationFrame(loop);
 
 	const buffer = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(buffer);
-	ctx.fillStyle = '#000';
+    analyser.getByteFrequencyData(buffer); ctx.fillStyle = '#000';
 	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	ctx.fillStyle = grd;
+
+	// 2048 to auto
+
+	grid_kHz=1;
+	while (grid_kHz*84.5/zoom<2048) {
+		ctx.fillText(grid_kHz+'k', grid_kHz*85.4/zoom, 50);
+		ctx.fillRect(grid_kHz*85.4/zoom, 0, 1, ctx.canvas.height);
+		grid_kHz++;
+	}
 
 	buffer.forEach((ampl, freq) => {
 		if (ampl>ampl_max) {ampl_max=ampl; freq_max=freq}
@@ -279,7 +286,7 @@ const loop = () => {
 
 	while (base_freq>31) {base_freq/=2; near_octave++};
 	near_note_freq = base_freqes.reduce((prev, curr) =>
-		(Math.abs(curr - base_freq) < Math.abs(prev - base_freq) ? curr : prev));
+		(Math.abs(curr-base_freq) < Math.abs(prev-base_freq) ? curr : prev));
 
 	notediv.name.innerText = notes[base_freqes.indexOf(near_note_freq)];
 	notediv.octave.innerText = near_octave;
@@ -295,10 +302,7 @@ const loop = () => {
 	}
 
 	ctx_flow.drawImage(ctx_flow.canvas, 0, speed);
-
-	near_octave = 0;
-	ampl_max = 0;
-	freq_max = 0;
+	near_octave = 0; ampl_max = 0; freq_max = 0;
 }
 
 </script>
