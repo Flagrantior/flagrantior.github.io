@@ -166,7 +166,7 @@ body {
 	align-self: center;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-end;
 	position: absolute;
 	bottom: 0;
 	background: rgba(0,0,0, 0.5);
@@ -176,6 +176,7 @@ body {
 #controls input {
 	margin-top: .8em;
 	width: 20em;
+	align-self: flex-end;
 }
 
 #starter {
@@ -214,9 +215,9 @@ body {
 	<canvas id="tune" width="2048" height="265"></canvas>
 	<canvas id="flow" width="2048" height="512"></canvas>
 	<div id="controls">
-		<div>ACUR: <input value="9"   type="range" min="0" max="10"    step="1"      oninput="newfftacc(this.value)"></div>
-		<div>ZOOM: <input value="0.9" type="range" min="0" max="0.999" step="0.0111" oninput="zoom=1-this.value"></div>
-		<div>FLOW: <input value="1"   type="range" min="1" max="10"    step="1"      oninput="speed=this.value"></div>
+		<div>ACUR: <input value="9"   type="range" min="0" max="10"     step="1"    oninput="newfftacc(this.value)"></div>
+		<div>ZOOM: <input value="460" type="range" min="0" max="511.99" step="0.01" oninput="zoom=1-Math.cbrt(this.value)*0.125;console.log(zoom)"></div>
+		<div>FLOW: <input value="1"   type="range" min="1" max="10"     step="1"    oninput="speed=this.value"></div>
 	</div>
 	<div id="starter" onclick="starter()">START</div>
 </body>
@@ -261,11 +262,11 @@ const base_freqes = [16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.
 
 let ampl_max=0, freq_max=0, base_freq=0, near_octave=0, grid_kHz=1;
 let near_note_freq='', freq_offset='';
-ctx.font = '30px monospace';
 
-var grd = ctx.createLinearGradient(0, 0, 0, 200);
+const grd = ctx.createLinearGradient(0, 0, 0, 200);
 grd.addColorStop(0, "#666");
 grd.addColorStop(1, "#000");
+ctx.font="1.3em Abel";
 
 const loop = () => {
 	requestAnimationFrame(loop);
@@ -274,14 +275,20 @@ const loop = () => {
     analyser.getByteFrequencyData(buffer); ctx.fillStyle = '#000';
 	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 	ctx.fillStyle = grd;
-
-	// 2048 to auto
-	// START
+	
+	for (let oct=0; oct<12; oct++) {
+		ctx.fillText(oct, (base_freqes[0]/1000)*85.4/zoom*2**oct+2, 40);
+		ctx.fillRect((base_freqes[0]/1000)*85.4/zoom*2**oct, 0, 1, 25);
+		for (let n=0; n<12; n++) {
+			notes[n].length==1 && (base_freqes[n]/1000)*85.4/zoom*2**oct>150 && ctx.fillText(notes[n], (base_freqes[n]/1000)*85.4/zoom*2**oct+2, 20);
+			ctx.fillRect((base_freqes[n]/1000)*85.4/zoom*2**oct, 22, 1, ctx.canvas.height);
+		}
+	}
 
 	grid_kHz=1;
 	while (grid_kHz*84.5/zoom<2048) {
-		ctx.fillText(grid_kHz+'k', grid_kHz*85.4/zoom, 50);
-		ctx.fillRect(grid_kHz*85.4/zoom, 0, 1, ctx.canvas.height);
+		ctx.fillText(' '+grid_kHz+'k', grid_kHz*85.4/zoom, 65);
+		ctx.fillRect(grid_kHz*85.4/zoom, 45, 2, 25);
 		grid_kHz++;
 	}
 
