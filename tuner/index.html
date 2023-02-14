@@ -276,20 +276,22 @@ const loop = () => {
 	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 	ctx.fillStyle = grd;
 	
-	for (let oct=0; oct<12; oct++) {
-		ctx.fillText(oct, (base_freqes[0]/1000)*85.4/zoom*2**oct+2, 40);
-		ctx.fillRect((base_freqes[0]/1000)*85.4/zoom*2**oct, 0, 1, 25);
-		for (let n=0; n<12; n++) {
-			notes[n].length==1 && (base_freqes[n]/1000)*85.4/zoom*2**oct>150 && ctx.fillText(notes[n], (base_freqes[n]/1000)*85.4/zoom*2**oct+2, 20);
-			ctx.fillRect((base_freqes[n]/1000)*85.4/zoom*2**oct, 22, 1, ctx.canvas.height);
+	if (window.innerWidth>window.innerHeight) {
+		for (let oct=0; oct<12; oct++) {
+			ctx.fillText(oct, (base_freqes[0]/1000)*85.4/zoom*2**oct+2, 40);
+			ctx.fillRect((base_freqes[0]/1000)*85.4/zoom*2**oct, 0, 1, 25);
+			for (let n=0; n<12; n++) {
+				notes[n].length==1 && (base_freqes[n]/1000)*85.4/zoom*2**oct>150 && ctx.fillText(notes[n], (base_freqes[n]/1000)*85.4/zoom*2**oct+2, 20);
+				ctx.fillRect((base_freqes[n]/1000)*85.4/zoom*2**oct, 22, 1, ctx.canvas.height);
+			}
 		}
-	}
 
-	grid_kHz=1;
-	while (grid_kHz*84.5/zoom<2048) {
-		ctx.fillText(' '+grid_kHz+'k', grid_kHz*85.4/zoom, 65);
-		ctx.fillRect(grid_kHz*85.4/zoom, 45, 2, 25);
-		grid_kHz++;
+		grid_kHz=1;
+		while (grid_kHz*84.5/zoom<2048) {
+			ctx.fillText(' '+grid_kHz+'k', grid_kHz*85.4/zoom, 65);
+			ctx.fillRect(grid_kHz*85.4/zoom, 45, 2, 25);
+			grid_kHz++;
+		}
 	}
 
 	buffer.forEach((ampl, freq) => {
