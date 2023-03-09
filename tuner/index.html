@@ -193,6 +193,15 @@ body {
 	padding-top: 1em;
 }
 
+#controls #buttons {
+	display: flex;
+	justify-content: space-around;
+	align-self: stretch;
+	font-size: 1.4em;
+	user-select: none;
+	cursor: pointer;
+}
+
 @media (orientation: portrait) {
 	#controls {
 		font-size: 2em;
@@ -216,8 +225,13 @@ body {
 	<canvas id="flow" width="2048" height="512"></canvas>
 	<div id="controls">
 		<div>ACUR: <input value="9"   type="range" min="0" max="10"     step="1"    oninput="newfftacc(this.value)"></div>
-		<div>ZOOM: <input value="460" type="range" min="0" max="511.99" step="0.01" oninput="zoom=1-Math.cbrt(this.value)*0.125;console.log(zoom)"></div>
+		<div>ZOOM: <input value="460" type="range" min="0" max="511.99" step="0.01" oninput="zoom=1-Math.cbrt(this.value)*0.125"></div>
 		<div>FLOW: <input value="1"   type="range" min="1" max="10"     step="1"    oninput="speed=this.value"></div>
+		<div>CONT: <input value="0"   type="range" min="-1" max="1"      step="0.01" oninput="contrast=this.value"></div>
+		<div id="buttons">
+			<div onclick="this.style.color=grid?    '#666':'#fff'; grid=!grid">GRID</div>
+			<div onclick="this.style.color=grad? '#666':'#fff'; grad=!grad">GRAD</div>
+		</div>
 	</div>
 	<div id="starter" onclick="starter()">START</div>
 </body>
@@ -246,6 +260,9 @@ const newfftacc = (v) => {
 newfftacc(9);
 let zoom = 0.1;
 let speed = 1;
+let contrast = 0;
+let grad = true;
+let grid = window.innerWidth > window.innerHeight;
 
 const notediv = {
 	name:     document.querySelector('#note_name_letter'),
@@ -276,7 +293,7 @@ const loop = () => {
 	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 	ctx.fillStyle = grd;
 	
-	if (window.innerWidth>window.innerHeight) {
+	if (grid) {
 		for (let oct=0; oct<12; oct++) {
 			ctx.fillText(oct, (base_freqes[0]/1000)*85.4/zoom*2**oct+2, 40);
 			ctx.fillRect((base_freqes[0]/1000)*85.4/zoom*2**oct, 0, 1, 25);
@@ -299,7 +316,7 @@ const loop = () => {
 	});
 
 	for (let freq=0; freq<analyser.frequencyBinCount*zoom; freq++) {
-		ctx.fillStyle = 'hsl('+(buffer[freq]/1.3+250)+',100%,'+buffer[freq]/2.55+'%)'; ctx_flow.fillStyle = ctx.fillStyle;
+		ctx.fillStyle = `hsl(${[buffer[freq]/1.3+250, grad?'100%':'0%', (buffer[freq]-((255-buffer[freq])*contrast))/2.55]}%)`; ctx_flow.fillStyle = ctx.fillStyle;
 		ctx.fillRect(Math.floor(freq*(2048/analyser.frequencyBinCount)*(1/zoom)), 265, Math.ceil(2048/analyser.frequencyBinCount*(1/zoom)), -buffer[freq]);
 		ctx_flow.fillRect(Math.floor(freq*(2048/analyser.frequencyBinCount)*(1/zoom)), 0, Math.ceil(2048/analyser.frequencyBinCount*(1/zoom)), speed);
 	}
