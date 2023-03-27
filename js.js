@@ -2,8 +2,8 @@
 'use strict';
 
 let consomode = false;
-let root = 0; // C
-let scale = 0b101010110101;
+let root = 9; // A
+let scale = 0b010110101101;
 let alter = 2; // b/#/n
 const ratio = 2**(1/12);
 const conso = [.55, .093, .098, .185, .234, .306, .067, .452, .154, .296, .151, .078]; // 0=1! 13=0.89
@@ -289,13 +289,15 @@ const keyed = {
 
 
 const panel = {
+	modulate: false,
+
 	render: () => {
 		if (document.querySelector('#panel') === null) {
 			document.write(`
 				<div id="panel">
 					<svg height="200px" width="200px" viewBox="0 0 100 100"><g>
 						${[...Array(12).keys()].map(n => {
-							let angle = Math.PI/12*2*(n-3);
+							let angle = Math.PI/12*2*(n+6);
 							return `<g>
 								<circle onclick="consomode? toggle(${(n*7)%12}) : panel.reroot(${(n*7)%12})" cx="${
 									35*Math.cos(angle)+50}" cy="${
@@ -333,6 +335,10 @@ const panel = {
 							<div onclick="palette()">THEME</div>
 							<div id="panelconso" onclick="toggleconso(); consomode && toggle(root)">CONSO</div>
 						</div>
+						<div class="wrap">
+							<div onclick="panel.modulate=!panel.modulate; this.style.background=panel.modulate? colors.panel_on_bg:colors.panel_bg;
+							this.style.color=panel.modulate? colors.panel_on_fg:colors.panel_fg">MODULATE</div>
+						</div>
 					</div>
 				</div>`
 			)
@@ -357,7 +363,7 @@ const panel = {
 
 	reroot: (n) => {
 		toggleconso(false);
-		scale=((scale+(scale<<12)>>(n+12-root)%12)&4095);
+		if (panel.modulate) scale=((scale+(scale<<12)>>(n+12-root)%12)&4095);
 		for (let i=12; i>(n+12-root)%12; i--) {
 			notes[1].push(notes[1].splice(0, 1)[0]);
 		}
