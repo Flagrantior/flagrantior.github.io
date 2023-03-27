@@ -2,8 +2,8 @@
 'use strict';
 
 let consomode = false;
-let root = 9; // A
-let scale = 0b010110101101;
+let root = 0; // C
+let scale = 0b101010110101;
 let alter = 2; // b/#/n
 const ratio = 2**(1/12);
 const conso = [.55, .093, .098, .185, .234, .306, .067, .452, .154, .296, .151, .078]; // 0=1! 13=0.89
@@ -223,7 +223,7 @@ const stringed = {
 	},
 
 	retune: (event, input) => {
-		!'ABCDEFGabcdefg#'.includes(event.key) && event.preventDefault(); // ADD OCTAVE NUMBERS
+		!'ABCDEFGabcdefg#'.includes(event.key) && event.preventDefault();
 		if (event.key === 'Enter') {
 			stringed.strings = input.value.length;
 			let shift=0; let i=0;
@@ -291,6 +291,7 @@ const keyed = {
 
 const panel = {
 	modulate: false,
+	quinted: true,
 
 	render: () => {
 		if (document.querySelector('#panel') === null) {
@@ -298,9 +299,9 @@ const panel = {
 				<div id="panel">
 					<svg height="200px" width="200px" viewBox="0 0 100 100"><g>
 						${[...Array(12).keys()].map(n => {
-							let angle = Math.PI/12*2*(n+6);
+							let angle = Math.PI/12*2*(n+7);
 							return `<g>
-								<circle onclick="consomode? toggle(${(n*7)%12}) : panel.reroot(${(n*7)%12})" cx="${
+								<circle onclick="consomode? toggle((${n}*(1+6*panel.quinted))%12) : panel.reroot((${n}*(1+6*panel.quinted))%12)" cx="${
 									35*Math.cos(angle)+50}" cy="${
 									35*Math.sin(angle)+50}" r="8"></circle>
 								<text text-anchor="middle" dominant-baseline="middle" x="${
@@ -324,30 +325,29 @@ const panel = {
 								[...Array(stringed.strings).keys()].map(nid =>
 								notes[0][stringed.zeroes[stringed.strings-1-nid]]).join('')}">]</div>
 						<div class="wrap">
-							<div id="panelfretted" onclick="
-								localStorage.setItem('stringed_fretted', !stringed.fretted);
-								stringed.fretted=!stringed.fretted; stringed.render();
-								toggleconso(false)">FRETTED</div>
-							<div id="panelalter" onclick="
-								alter=(alter+1)%3; stringed.render(); keyed.shader();
-								panel.render(); panel.shader(); chords.render(); toggleconso(false)">ALTER</div>
+							<div onclick="panel.modulate=!panel.modulate; this.style.background=panel.modulate? colors.panel_on_bg:colors.panel_bg;
+							this.style.color=panel.modulate? colors.panel_on_fg:colors.panel_fg">MODULATE</div>
+							<div onclick="panel.quinted=!panel.quinted; panel.reorder(); panel.shader()">REQUINT</div>
 						</div>
 						<div class="wrap">
 							<div onclick="palette()">THEME</div>
 							<div id="panelconso" onclick="toggleconso(); consomode && toggle(root)">CONSO</div>
 						</div>
 						<div class="wrap">
-							<div onclick="panel.modulate=!panel.modulate; this.style.background=panel.modulate? colors.panel_on_bg:colors.panel_bg;
-							this.style.color=panel.modulate? colors.panel_on_fg:colors.panel_fg">MODULATE</div>
+							<div id="panelfretted" onclick="
+								localStorage.setItem('stringed_fretted', !stringed.fretted);
+								stringed.fretted=!stringed.fretted; stringed.render();
+								toggleconso(false)">FRETS</div>
+							<div id="panelalter" onclick="
+								alter=(alter+1)%3; stringed.render(); keyed.shader();
+								panel.shader(); panel.reorder(); chords.render(); toggleconso(false)">ALTER</div>
 						</div>
 					</div>
 				</div>`
 			)
 			window.onload = () => panel.shader();
+			panel.reorder();
 		};
-		document.querySelectorAll('#panel svg g text').forEach((node, n) => {
-			node.innerHTML = notes[alter][(n*7%12)];
-		});
 	},
 
 	shader: (k=null, chord=null) => {
@@ -355,11 +355,13 @@ const panel = {
 			((scales.get(scale) !== undefined)? scale : '');
 		document.querySelectorAll('#panel svg g circle').forEach((circle, cid) =>
 			circle.setAttribute('fill', (consomode)?
-				((scale >> (cid*7+12-root)%12 & 1)? consocolor((cid*7+12-k)%12) : ((k===(cid*7)%12 && chord==null)? colors.panel_on_bg+'77' : colors.panel_off_bg))
-				: (((cid*7)%12===root)? colors.panel_on_bg : colors.panel_off_bg)) );
+				((scale >> (cid*(1+6*panel.quinted)+12-root)%12 & 1)?
+					consocolor((cid*(1+6*panel.quinted)+12-k)%12) : ((k===(cid*(1+6*panel.quinted))%12 && chord==null)?
+						colors.panel_on_bg+'77' : colors.panel_off_bg))
+				: (((cid*(1+6*panel.quinted))%12===root)? colors.panel_on_bg : colors.panel_off_bg)) );
 		document.querySelectorAll('#panel svg g text').forEach((text, tid) =>
-			text.setAttribute('fill', ((tid*7+24-k+((k!==null)? root : 0))%12===root)?
-				colors.panel_on_fg : (((scale>>(tid*7+24-root)%12)&1)? colors.panel_off_fg : colors.panel_off_fg+'66')));
+			text.setAttribute('fill', ((tid*(1+6*panel.quinted)+24-k+((k!==null)? root : 0))%12===root)?
+				colors.panel_on_fg : (((scale>>(tid*(1+6*panel.quinted)+24-root)%12)&1)? colors.panel_off_fg : colors.panel_off_fg+'66')));
 	},
 
 	reroot: (n) => {
@@ -368,9 +370,16 @@ const panel = {
 		for (let i=12; i>(n+12-root)%12; i--) {
 			notes[1].push(notes[1].splice(0, 1)[0]);
 		}
-		stringed.shader(); panel.shader(); chords.shader();
+		stringed.shader(); panel.shader(); panel.reorder();
+		if (alter==1) {stringed.render(); chords.render()} else {stringed.render(); chords.shader()};
 		root=n; toggle();
 	},
+	
+	reorder: () => document.querySelectorAll('#panel svg g text')
+		.forEach((node, n) => {
+			let angle = Math.PI/12*2*(n+7);
+			node.innerHTML = alter!=1? notes[alter][(n*(1+6*panel.quinted))%12]
+				: `<tspan font-size=".5em" dy="-2">${notes[alter][(n*(1+6*panel.quinted))%12]}</tspan><tspan font-size="0.8em" dy="5">${notes[2][(n*(1+6*panel.quinted))%12]}</tspan>`}),
 }
 
 
