@@ -55,10 +55,11 @@ let notes = [
 ];
 
 const scales = new Map([
-	[0b111111111111, 'Chromatic'],
-
 	[0b101010110101, 'Major'],
 	[0b010110101101, 'Minor'],
+
+	[0b111111111111, 'Chromatic'],
+
 	[0b011010101101, 'Dorian'],
 	[0b010110101011, 'Phrygian'],
 	[0b101011010101, 'Lydian'],
