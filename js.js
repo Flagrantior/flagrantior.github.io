@@ -361,7 +361,7 @@ const panel = {
 		for (let i=12; i>(n+12-root)%12; i--) {
 			notes[1].push(notes[1].splice(0, 1)[0]);
 		}
-		stringed.render(); panel.render(); chords.render();
+		stringed.shader(); panel.shader(); chords.shader();
 		root=n; toggle();
 	},
 }
