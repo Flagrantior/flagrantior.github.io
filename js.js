@@ -379,7 +379,7 @@ const panel = {
 		.forEach((node, n) => {
 			let angle = Math.PI/12*2*(n+7);
 			node.innerHTML = alter!=1? notes[alter][(n*(1+6*panel.quinted))%12]
-				: `<tspan font-size=".5em" dy="-2">${notes[alter][(n*(1+6*panel.quinted))%12]}</tspan><tspan font-size="0.7em" dy="5">${notes[2][(n*(1+6*panel.quinted))%12]}</tspan>`}),
+				: `<tspan font-size=".5em" dy="-2">${notes[alter][(n*(1+6*panel.quinted))%12]}</tspan><tspan font-size="0.7em" dy="5">${notes[0][(n*(1+6*panel.quinted))%12]}</tspan>`}),
 }
 
 
