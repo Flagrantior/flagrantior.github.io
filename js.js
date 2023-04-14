@@ -315,9 +315,9 @@ const panel = {
 							${[...scales].map(s => {
 								return `<option value="${s[0]}">${s[1]}</option>`
 							}).join('')}
-							${chords.chords.map(chord => {
+							${chords.chords.map((chord, cid) => {
 								return `<option value="${
-									((chord[0]%4096) | (chord[0]>>12))}">${chord[1]} chord</option>`
+									((chord[0]%4096) | (chord[0]>>12))}">${cid!=0? chord[1]:'maj'} chord</option>`
 							}).join('')}
 						</select>
 						<div id="retune">[<input type="text" onkeypress="
@@ -386,7 +386,7 @@ const panel = {
 const chords = {
 	chords: [
     //    13  11   9   7    5   3   1
-        [0b00000_00000_00_00100_10001, 'M'       ],
+        [0b00000_00000_00_00100_10001, ''       ],
         [0b00000_00000_00_00100_01001, 'm'       ],
         [0b00000_00000_00_00100_00001, '5'       ],
         [0b00000_00000_00_00001_00001, '4'       ],
@@ -413,16 +413,15 @@ const chords = {
         [0b00000_00000_01_00101_00001, '7sus4'   ],
         [0b00000_00000_00_10100_10001, 'maj6'    ],
         [0b10000_00000_01_00100_10001, '13'      ],
-        [0b00000_00000_01_10100_01001, 'min6'    ],
+        [0b00000_00000_01_10100_01001, 'm6'    ],
         [0b00000_00100_00_10100_10001, '6/9'     ],
         [0b00000_00100_01_00101_00001, '9sus4'   ],
         [0b00000_00100_01_00010_01001, 'm9n5'    ],
     ],
 
 	render: () => {
-		if (document.querySelector('#chords') === null)
-			document.write(`<div id="chords"><div id="chords_types">${
-				chords.chords.map((chord, cid) => {return `<div onclick="chords.primes(${cid})">${chord[1]}</div>`}).join('')}</div><div id="chordswrap"></div></div>`);
+		if (document.querySelector('#chords') === null) document.write(`<div id="chords"><div id="chords_types">${
+			chords.chords.map((chord, cid) => {return `<div onclick="chords.primes(${cid})">${cid!=0? chord[1]:'M'}</div>`}).join('')}</div><div id="chordswrap"></div></div>`);
 		document.querySelector('#chordswrap').innerHTML = `
 			${notes[alter].map((prime, pid) => {
 				return `<div>${chords.chords.map(c => {
