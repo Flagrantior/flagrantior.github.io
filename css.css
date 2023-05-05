@@ -241,6 +241,7 @@ select {
 	transform: scale(1.1);
 }
 
+hr {align: right}
 
 #palette {
 	position: fixed;
