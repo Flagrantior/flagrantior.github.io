@@ -480,12 +480,12 @@ const chords = {
 const linked = () => {
 	if (document.querySelector('#linked') === null) {
 		document.write(`<div id="linked">
-			<b><a href="donate.html">DONATE</a></b>
-			<b><a href="hint/DARKHINT_H.png">HINT</a></b>
+			<a href="hint/DARKHINT_H.png"><b>HINT</b></a>
 			<a href="oscill">OSCILL</a>
 			<a href="tuner">TUNER</a>
 			<a href="mailto:flagrantior@gmail.com">EMAIL</a>
 			<a href="https://t.me/flagrantior">TELEGRAM</a>
+			<a href="donate.html"><b>CRYPTODONATE</b></a>
 			<div>Valentin Gaan</div>
 		</div>`);
 	}
